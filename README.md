@@ -8,6 +8,12 @@ It is **not** the Experience itself, the desktop runtime, or a duplicate of FSM_
 
 ## Architecture
 
+![WebApp to AnyApp bridge](docs/assets/webapp-anyapp-bridge.svg)
+
+The bridge is deliberately narrow: it coordinates an explicitly requested Experience rather than turning the browser into a remote command source.
+
+## Architecture
+
 An Experience may have multiple manifestations:
 
 - **WebApp** — browser distribution, discovery, interaction, Web APIs, WebXR, and companion connectivity.
