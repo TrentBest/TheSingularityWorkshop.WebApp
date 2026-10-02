@@ -1,6 +1,10 @@
 # WebApp Architecture
 
 ## Purpose
+![WebApp to AnyApp bridge](assets/webapp-anyapp-bridge.svg)
+
+The bridge remains a coordination boundary rather than an execution backdoor.
+
 
 **TheSingularityWorkshop.WebApp** is the browser manifestation of the Singularity Workshop.
 
