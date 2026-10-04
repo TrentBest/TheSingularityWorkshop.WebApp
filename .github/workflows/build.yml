@@ -30,3 +30,6 @@ jobs:
 
       - name: Build
         run: dotnet build TheSingularityWorkshop.WebApp.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test tests/TheSingularityWorkshop.WebApp.Tests/TheSingularityWorkshop.WebApp.Tests.csproj --configuration Release --no-build --verbosity normal
