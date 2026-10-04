@@ -26,7 +26,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore
-        run: dotnet restore TheSingularityWorkshop.WebApp.csproj
+        run: dotnet restore TheSingularityWorkshop.WebApp.slnx
 
       - name: Build
-        run: dotnet build TheSingularityWorkshop.WebApp.csproj --configuration Release --no-restore
+        run: dotnet build TheSingularityWorkshop.WebApp.slnx --configuration Release --no-restore
