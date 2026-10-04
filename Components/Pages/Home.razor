@@ -1,6 +1,10 @@
 @namespace TheSingularityWorkshop.WebApp.Components.Pages
 @page "/"
 
+@using TheSingularityWorkshop.Workshop.Gui
+@using TheSingularityWorkshop.WebApp.Infrastructure
+@inject WebAppCosRuntime Runtime
+
 <PageTitle>The Singularity Workshop</PageTitle>
 
 <header class="site-header">
@@ -65,7 +69,7 @@
     <section class="demo-panel" id="enter">
         <div class="demo-intro">
             <p class="eyebrow">LIVE CONCEPT / 001</p>
-            <h2>The Workshop is already running.</h2>
+            <h2>The Workshop is actually running.</h2>
             <p>
                 Start with almost nothing. Add a capability. Give it a meaning.
                 Let the composition boundary assemble the experience.
@@ -78,16 +82,20 @@
             </div>
             <div class="manifest-code">
                 <span class="code-muted">{</span>
-                <span><b>"experience"</b>: "forge"</span>
-                <span><b>"intent"</b>: "open.forge"</span>
-                <span><b>"bundles"</b>: [ "state", "gui", "ontology" ]</span>
-                <span><b>"compose"</b>: "runtime"</span>
+                <span><b>"runtimeId"</b>: @Runtime.Assembly.RuntimeId</span>
+                <span><b>"bundles"</b>: [ @Runtime.Assembly.Bundles.Count ]</span>
+                <span><b>"bootstrap"</b>: @Runtime.Moniker.Id</span>
+                <span><b>"provider"</b>: "@Runtime.Moniker.Descriptor.Providers[0].Id"</span>
+                <span><b>"arbitration"</b>: @Runtime.Assembly.ArbitrationRounds</span>
                 <span class="code-muted">}</span>
+            </div>
+            <div class="runtime-moniker">
+                @BlazorGuiRenderer.Render(Runtime.Moniker.Root!)
             </div>
             <div class="stage-result">
                 <span class="result-pulse"></span>
-                <strong>Runtime assembly ready</strong>
-                <small>Independent pieces → one experience</small>
+                <strong>FSM_COS runtime assembly ready</strong>
+                <small>Manifest → MicroBundle → arbitration → Blazor</small>
             </div>
         </div>
     </section>
