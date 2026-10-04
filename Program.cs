@@ -1,3 +1,5 @@
+using TheSingularityWorkshop.WebApp.Components;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -15,6 +17,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<TheSingularityWorkshop.WebApp.Components.App>();
+app.MapRazorComponents<App>();
 
 app.Run();
