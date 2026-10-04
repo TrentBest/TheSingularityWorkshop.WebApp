@@ -37,3 +37,23 @@ dotnet run
 ## Design principle
 
 The site should **edify, not mystify**. Visuals can make the ideas memorable, but the architecture shown here must remain faithful to the actual projects behind it.
+
+
+## Runtime composition
+
+The WebApp now crosses the real FSM_COS boundary instead of only illustrating it.
+
+At process startup the host builds a runtime manifest containing the Workshop Moniker bootstrap request (3101), resolves that capability through the host-owned IMicroBundleCatalog, and executes it through FsmCos. The resulting RuntimeAssembly is then rendered by the Blazor GUI renderer.
+
+The important dependency direction is:
+
+**WebApp → FSM_COS → MicroBundleDomain → host-owned MicroBundle catalog**
+
+FSM_COS does not know that the Moniker exists. The host chooses what is available and what belongs in its startup manifest.
+
+The current branch contains a temporary WebApp-local Moniker bridge because the independent TheSingularityWorkshop.Experiences.Moniker package is not yet published. That bridge is intentionally shaped to disappear once the canonical package is available; the bundle identity remains 3101.
+
+The result is a real vertical slice:
+
+**startup manifest → FSM_COS → Moniker MicroBundle → semantic GUI tree → Blazor**
+
