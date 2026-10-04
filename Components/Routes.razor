@@ -1,0 +1,13 @@
+<Router AppAssembly="@typeof(Program).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not Found · The Singularity Workshop</PageTitle>
+        <main class="not-found">
+            <p class="eyebrow">THE WORKSHOP LOST THE TRAIL</p>
+            <h1>That doorway doesn't exist yet.</h1>
+            <a class="button button-primary" href="/">Return to the Workshop</a>
+        </main>
+    </NotFound>
+</Router>
