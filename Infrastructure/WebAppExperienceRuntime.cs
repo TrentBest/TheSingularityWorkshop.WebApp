@@ -111,10 +111,12 @@ public sealed class WebAppExperienceRuntime : IDisposable
 
     private void ActivateRoot()
     {
-        if (_actors.Count != 0)
+        var root = _actors[0];
+        if (root.Active)
             return;
 
-        var root = _actors[0];
+        root.Activate(0, _page.TotalTicks);
+        _page.Population = 1;
     }
 
     private void TickLivingGui()
@@ -275,8 +277,8 @@ public sealed class WebAppExperienceRuntime : IDisposable
             IsValid = true;
         }
 
-        public string Name { get; }
-        public bool IsValid { get; }
+        public string Name { get; set; }
+        public bool IsValid { get; set; }
         public bool Active { get; private set; }
         public bool IsRoot { get; private set; }
         public int Generation { get; private set; }
@@ -343,8 +345,8 @@ public sealed class WebAppExperienceRuntime : IDisposable
 
     public sealed class PageContext : IStateContext
     {
-        public string Name => "WebAppPage";
-        public bool IsValid => true;
+        public string Name { get; set; } = "WebAppPage";
+        public bool IsValid { get; set; } = true;
         public bool EnterRequested { get; set; }
         public bool MonikerVisible { get; set; }
         public bool NavigationVisible { get; set; }
