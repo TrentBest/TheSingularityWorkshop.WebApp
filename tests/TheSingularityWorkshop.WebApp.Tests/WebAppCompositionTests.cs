@@ -32,9 +32,6 @@ public sealed class WebAppCompositionTests
         Assert.Equal("moniker-singularity", column.Children[1].Id);
         Assert.Equal("moniker-workshop", column.Children[2].Id);
     }
-}
-
-
 
     [Fact]
     public void Experience_preallocates_independent_living_actor_contexts()
@@ -58,3 +55,4 @@ public sealed class WebAppCompositionTests
         Assert.True(experience.Actors[0].IsRoot);
         Assert.Equal(1, experience.Population);
     }
+}
