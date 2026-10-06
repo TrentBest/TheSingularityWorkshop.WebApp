@@ -1,4 +1,5 @@
 using TheSingularityWorkshop.WebApp.Infrastructure;
+using Xunit;
 
 namespace TheSingularityWorkshop.WebApp.Tests;
 
