@@ -19,20 +19,28 @@ public sealed class WebAppMonikerMicroBundle : IMicroBundle
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        var builder = GuiBuilders.Column("moniker-column")
-            .Property("horizontalAlignment", "Center")
-            .Property("verticalAlignment", "Center")
+        var root = GuiBuilder.Create("Panel", "moniker-root")
+            .Property("background", "#020711")
+            .Property("display", "flex")
+            .Property("justifyContent", "center")
+            .Property("alignItems", "center");
+
+        var column = GuiBuilder.Create("Panel", "moniker-column")
+            .Property("display", "flex")
+            .Property("flexDirection", "column")
+            .Property("alignItems", "center")
             .Property("padding", "24");
 
         foreach (var (word, offset) in new[] { ("THE", 0), ("SINGULARITY", 3), ("WORKSHOP", 14) })
         {
-            var row = GuiBuilders.Row($"moniker-{word.ToLowerInvariant()}")
-                .Property("horizontalAlignment", "Center");
+            var row = GuiBuilder.Create("Panel", $"moniker-{word.ToLowerInvariant()}")
+                .Property("display", "flex")
+                .Property("justifyContent", "center");
 
             for (var index = 0; index < word.Length; index++)
             {
                 var phase = (offset + index) % 6;
-                var color = phase switch
+                var foreground = phase switch
                 {
                     0 => "#FF3030",
                     1 => "#FF7A00",
@@ -42,21 +50,85 @@ public sealed class WebAppMonikerMicroBundle : IMicroBundle
                     _ => "#FF2CFF"
                 };
 
-                row.Child(GuiBuilders.Text(
-                    $"moniker-{word.ToLowerInvariant()}-{index}", word[index].ToString())
-                    .Property("foreground", color)
-                    .Property("fontSize", "76")
-                    .Property("fontWeight", "700")
-                    .Property("fontFamily", "Consolas"));
+                row.Child(
+                    "Text",
+                    $"moniker-{word.ToLowerInvariant()}-{index}",
+                    character => character
+                        .Text(word[index].ToString())
+                        .Property("foreground", foreground)
+                        .Property("fontSize", "76")
+                        .Property("fontWeight", "700")
+                        .Property("fontFamily", "Consolas"));
             }
 
-            builder.Child(row);
+            column.Child(
+                "Panel",
+                row.Build().Id,
+                builder =>
+                {
+                    foreach (var property in row.Build().Properties)
+                        builder.Property(property.Key, property.Value);
+
+                    foreach (var child in row.Build().Children)
+                        builder.Child(
+                            child.Kind,
+                            child.Id,
+                            childBuilder =>
+                            {
+                                if (child.Text is not null)
+                                    childBuilder.Text(child.Text);
+
+                                if (child.Source is not null)
+                                    childBuilder.Image(child.Source);
+
+                                foreach (var property in child.Properties)
+                                    childBuilder.Property(property.Key, property.Value);
+                            });
+                });
         }
 
-        Root = GuiBuilders.Panel("moniker-root")
-            .Property("background", "#020711")
-            .Child(builder)
-            .Build();
+        root.Child(
+            "Panel",
+            "moniker-content",
+            builder =>
+            {
+                builder.Property("display", "flex")
+                    .Property("flexDirection", "column")
+                    .Property("alignItems", "center")
+                    .Property("padding", "24");
+
+                foreach (var row in column.Build().Children)
+                {
+                    builder.Child(
+                        row.Kind,
+                        row.Id,
+                        rowBuilder =>
+                        {
+                            foreach (var property in row.Properties)
+                                rowBuilder.Property(property.Key, property.Value);
+
+                            foreach (var child in row.Children)
+                            {
+                                rowBuilder.Child(
+                                    child.Kind,
+                                    child.Id,
+                                    childBuilder =>
+                                    {
+                                        if (child.Text is not null)
+                                            childBuilder.Text(child.Text);
+
+                                        if (child.Source is not null)
+                                            childBuilder.Image(child.Source);
+
+                                        foreach (var property in child.Properties)
+                                            childBuilder.Property(property.Key, property.Value);
+                                    });
+                            }
+                        });
+                }
+            });
+
+        Root = root.Build();
     }
 
     public bool Arbitrate(IMicroBundleArbitrationContext context, int roundIndex)
