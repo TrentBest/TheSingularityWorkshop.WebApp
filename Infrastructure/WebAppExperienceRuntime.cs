@@ -57,6 +57,13 @@ public sealed class WebAppExperienceRuntime : IDisposable
 
         _page = new PageContext();
 
+        for (var index = 0; index < PopulationTarget; index++)
+        {
+            var actor = new ActorContext();
+            _actors.Add(actor);
+            fsm_API.Create.CreateInstance("WebAppLivingActorFSM", actor, _actorGroup);
+        }
+
         _heartbeat = new Thread(Heartbeat)
         {
             IsBackground = true,
