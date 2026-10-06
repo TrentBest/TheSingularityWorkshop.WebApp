@@ -25,104 +25,48 @@ public sealed class WebAppMonikerMicroBundle : IMicroBundle
             .Property("justifyContent", "center")
             .Property("alignItems", "center");
 
-        var column = GuiBuilder.Create("Panel", "moniker-column")
-            .Property("display", "flex")
-            .Property("flexDirection", "column")
-            .Property("alignItems", "center")
-            .Property("padding", "24");
-
-        foreach (var (word, offset) in new[] { ("THE", 0), ("SINGULARITY", 3), ("WORKSHOP", 14) })
-        {
-            var row = GuiBuilder.Create("Panel", $"moniker-{word.ToLowerInvariant()}")
-                .Property("display", "flex")
-                .Property("justifyContent", "center");
-
-            for (var index = 0; index < word.Length; index++)
-            {
-                var phase = (offset + index) % 6;
-                var foreground = phase switch
-                {
-                    0 => "#FF3030",
-                    1 => "#FF7A00",
-                    2 => "#FFD34D",
-                    3 => "#52E05A",
-                    4 => "#00A8FF",
-                    _ => "#FF2CFF"
-                };
-
-                row.Child(
-                    "Text",
-                    $"moniker-{word.ToLowerInvariant()}-{index}",
-                    character => character
-                        .Text(word[index].ToString())
-                        .Property("foreground", foreground)
-                        .Property("fontSize", "76")
-                        .Property("fontWeight", "700")
-                        .Property("fontFamily", "Consolas"));
-            }
-
-            column.Child(
-                "Panel",
-                row.Build().Id,
-                builder =>
-                {
-                    foreach (var property in row.Build().Properties)
-                        builder.Property(property.Key, property.Value);
-
-                    foreach (var child in row.Build().Children)
-                        builder.Child(
-                            child.Kind,
-                            child.Id,
-                            childBuilder =>
-                            {
-                                if (child.Text is not null)
-                                    childBuilder.Text(child.Text);
-
-                                if (child.Source is not null)
-                                    childBuilder.Image(child.Source);
-
-                                foreach (var property in child.Properties)
-                                    childBuilder.Property(property.Key, property.Value);
-                            });
-                });
-        }
-
         root.Child(
             "Panel",
-            "moniker-content",
-            builder =>
+            "moniker-column",
+            column =>
             {
-                builder.Property("display", "flex")
+                column.Property("display", "flex")
                     .Property("flexDirection", "column")
                     .Property("alignItems", "center")
                     .Property("padding", "24");
 
-                foreach (var row in column.Build().Children)
+                foreach (var (word, offset) in new[] { ("THE", 0), ("SINGULARITY", 3), ("WORKSHOP", 14) })
                 {
-                    builder.Child(
-                        row.Kind,
-                        row.Id,
-                        rowBuilder =>
+                    column.Child(
+                        "Panel",
+                        $"moniker-{word.ToLowerInvariant()}",
+                        row =>
                         {
-                            foreach (var property in row.Properties)
-                                rowBuilder.Property(property.Key, property.Value);
+                            row.Property("display", "flex")
+                                .Property("justifyContent", "center");
 
-                            foreach (var child in row.Children)
+                            for (var index = 0; index < word.Length; index++)
                             {
-                                rowBuilder.Child(
-                                    child.Kind,
-                                    child.Id,
-                                    childBuilder =>
-                                    {
-                                        if (child.Text is not null)
-                                            childBuilder.Text(child.Text);
+                                var phase = (offset + index) % 6;
+                                var foreground = phase switch
+                                {
+                                    0 => "#FF3030",
+                                    1 => "#FF7A00",
+                                    2 => "#FFD34D",
+                                    3 => "#52E05A",
+                                    4 => "#00A8FF",
+                                    _ => "#FF2CFF"
+                                };
 
-                                        if (child.Source is not null)
-                                            childBuilder.Image(child.Source);
-
-                                        foreach (var property in child.Properties)
-                                            childBuilder.Property(property.Key, property.Value);
-                                    });
+                                row.Child(
+                                    "Text",
+                                    $"moniker-{word.ToLowerInvariant()}-{index}",
+                                    character => character
+                                        .Text(word[index].ToString())
+                                        .Property("foreground", foreground)
+                                        .Property("fontSize", "76")
+                                        .Property("fontWeight", "700")
+                                        .Property("fontFamily", "Consolas"));
                             }
                         });
                 }
