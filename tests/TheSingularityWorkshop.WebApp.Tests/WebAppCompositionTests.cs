@@ -33,3 +33,27 @@ public sealed class WebAppCompositionTests
         Assert.Equal("moniker-workshop", column.Children[2].Id);
     }
 }
+
+
+    [Fact]
+    public void Experience_preallocates_independent_living_actor_contexts()
+    {
+        using var experience = new WebAppExperienceRuntime();
+
+        Assert.Equal(100, experience.Actors.Count);
+        Assert.All(experience.Actors, actor => Assert.False(actor.Active));
+        Assert.Equal("Gateway", experience.CurrentState);
+    }
+
+    [Fact]
+    public void Enter_starts_the_fsm_driven_living_experience()
+    {
+        using var experience = new WebAppExperienceRuntime();
+
+        experience.RequestEnter();
+
+        Assert.True(experience.EnterRequested);
+        Assert.True(experience.Actors[0].Active);
+        Assert.True(experience.Actors[0].IsRoot);
+        Assert.Equal(1, experience.Population);
+    }
