@@ -20,7 +20,8 @@ public sealed class WebAppCosRuntime
         if (!Assembly.TryGetBundle<WebAppMonikerMicroBundle>(
                 WebAppMonikerMicroBundle.BundleId,
                 out var moniker) ||
-            moniker?.Root is null)
+            moniker is null ||
+            moniker.Root is null)
         {
             throw new InvalidOperationException(
                 "The Workshop Moniker did not compose through FSM_COS during WebApp startup.");
