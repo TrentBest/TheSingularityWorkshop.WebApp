@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - master
-      - public-face
-      - implementation-**
+      - development
   pull_request:
   workflow_dispatch:
 
