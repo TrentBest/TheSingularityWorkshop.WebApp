@@ -43,7 +43,7 @@ public sealed class WebAppMonikerMicroBundle : IMicroBundle
     }
 
     private static void AddLine(
-        ElementBuilder parent,
+        GuiBuilder parent,
         string word,
         int startIndex)
     {
