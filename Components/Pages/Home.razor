@@ -3,6 +3,8 @@
 @rendermode InteractiveServer
 @implements IDisposable
 @inject TheSingularityWorkshop.WebApp.Infrastructure.WebAppExperienceRuntime Experience
+@inject TheSingularityWorkshop.WebApp.Infrastructure.WebAppCosRuntime CosRuntime
+@using TheSingularityWorkshop.Workshop.Gui
 
 <PageTitle>The Singularity Workshop</PageTitle>
 
@@ -54,11 +56,11 @@
 
             @if (Experience.MonikerVisible && !Experience.NavigationVisible)
             {
-                <section class="manifest-moniker" aria-label="The Singularity Workshop">
-                    <div>THE</div>
-                    <div>SINGULARITY</div>
-                    <div>WORKSHOP</div>
-                    <small>MANIFEST // WORKSHOP</small>
+                <section class="experience-moniker" aria-label="The Singularity Workshop">
+                    @if (CosRuntime.Moniker.Root is { } monikerRoot)
+                    {
+                        @BlazorGuiRenderer.Render(monikerRoot)
+                    }
                 </section>
             }
 
