@@ -20,59 +20,61 @@ public sealed class WebAppMonikerMicroBundle : IMicroBundle
         ArgumentNullException.ThrowIfNull(context);
 
         var root = GuiBuilder.Create("Panel", "moniker-root")
-            .Property("background", "#020711")
-            .Property("display", "flex")
-            .Property("justifyContent", "center")
-            .Property("alignItems", "center");
+            .Property("class", "webapp-moniker flex-hello")
+            .Property("aria-label", "The Singularity Workshop");
 
-        root.Child(
-            "Panel",
-            "moniker-column",
-            column =>
-            {
-                column.Property("display", "flex")
-                    .Property("flexDirection", "column")
-                    .Property("alignItems", "center")
-                    .Property("padding", "24");
+        root.Child("Panel", "moniker-orbit", orbit =>
+            orbit.Property("class", "flex-hello-orbit"));
 
-                foreach (var (word, offset) in new[] { ("THE", 0), ("SINGULARITY", 3), ("WORKSHOP", 14) })
-                {
-                    column.Child(
-                        "Panel",
-                        $"moniker-{word.ToLowerInvariant()}",
-                        row =>
-                        {
-                            row.Property("display", "flex")
-                                .Property("justifyContent", "center");
+        root.Child("Panel", "moniker", moniker =>
+        {
+            moniker.Property("class", "hello-moniker");
 
-                            for (var index = 0; index < word.Length; index++)
-                            {
-                                var phase = (offset + index) % 6;
-                                var foreground = phase switch
-                                {
-                                    0 => "#FF3030",
-                                    1 => "#FF7A00",
-                                    2 => "#FFD34D",
-                                    3 => "#52E05A",
-                                    4 => "#00A8FF",
-                                    _ => "#FF2CFF"
-                                };
+            AddLine(moniker, "THE", 0);
+            AddLine(moniker, "SINGULARITY", 3);
+            AddLine(moniker, "WORKSHOP", 14);
+        });
 
-                                row.Child(
-                                    "Text",
-                                    $"moniker-{word.ToLowerInvariant()}-{index}",
-                                    character => character
-                                        .Text(word[index].ToString())
-                                        .Property("foreground", foreground)
-                                        .Property("fontSize", "76")
-                                        .Property("fontWeight", "700")
-                                        .Property("fontFamily", "Consolas"));
-                            }
-                        });
-                }
-            });
+        root.Child("Text", "moniker-state", state =>
+            state.Text("STATE: MONIKER")
+                .Property("class", "flex-hello-state"));
 
         Root = root.Build();
+    }
+
+    private static void AddLine(
+        ElementBuilder parent,
+        string word,
+        int startIndex)
+    {
+        parent.Child("Panel", $"moniker-line-{word.ToLowerInvariant()}", line =>
+        {
+            line.Property("class", "hello-line");
+
+            for (var glyphIndex = 0; glyphIndex < word.Length; glyphIndex++)
+            {
+                var phaseIndex = startIndex + glyphIndex;
+                var colorClass = (phaseIndex % 6) switch
+                {
+                    0 => "glyph-red",
+                    1 => "glyph-orange",
+                    2 => "glyph-yellow",
+                    3 => "glyph-green",
+                    4 => "glyph-blue",
+                    _ => "glyph-magenta"
+                };
+
+                line.Child(
+                    "Text",
+                    $"moniker-{word.ToLowerInvariant()}-{glyphIndex}",
+                    glyph => glyph
+                        .Text(word[glyphIndex].ToString())
+                        .Property("class", $"hello-glyph {colorClass}")
+                        .Property(
+                            "style",
+                            $"--phase:{glyphIndex * 27}deg;--phase-index:{phaseIndex};--wave-time:0;"));
+            }
+        });
     }
 
     public bool Arbitrate(IMicroBundleArbitrationContext context, int roundIndex)
