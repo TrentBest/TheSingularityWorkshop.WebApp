@@ -56,6 +56,7 @@ public sealed class WebAppExperienceRuntime : IDisposable
             .BuildDefinition();
 
         _page = new PageContext();
+        fsm_API.Create.CreateInstance("WebAppPageFSM", _page, _pageGroup);
 
         for (var index = 0; index < PopulationTarget; index++)
         {
