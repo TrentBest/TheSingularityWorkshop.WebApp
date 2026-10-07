@@ -16,6 +16,138 @@
     height: 100%;
 }
 
+
+/* Composed Moniker MicroBundle presentation.
+   These classes mirror the living WebPage moniker: the host renders the tree;
+   the bundle supplies the semantic GUI structure. */
+.experience-moniker {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+}
+
+.experience-moniker > .webapp-moniker {
+    position: absolute;
+    inset: 0;
+}
+
+.webapp-moniker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    overflow: hidden;
+    isolation: isolate;
+    background: radial-gradient(circle at 50% 48%,rgba(0,234,255,.09),transparent 34%),#020711;
+    color: #fff;
+    font-family: Consolas,"Courier New",monospace;
+}
+
+.webapp-moniker::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image: linear-gradient(rgba(0,234,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,44,255,.035) 1px,transparent 1px);
+    background-size: 44px 44px;
+    animation: webappMonikerGridDrift 18s linear infinite;
+}
+
+.webapp-moniker .flex-hello-orbit {
+    position: absolute;
+    width: min(55vw,720px);
+    height: min(55vw,720px);
+    border: 1px solid rgba(0,234,255,.16);
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgba(0,234,255,.06);
+    animation: webappHelloOrbit 6s ease-in-out infinite;
+}
+
+.webapp-moniker .hello-moniker {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .03em;
+    perspective: 900px;
+    transform-style: preserve-3d;
+    animation: webappMonikerKelpSway 7.5s ease-in-out infinite;
+    will-change: transform,filter;
+}
+
+.webapp-moniker .hello-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    line-height: .84;
+}
+
+.webapp-moniker .hello-glyph {
+    display: inline-block;
+    transform-origin: 50% 100%;
+    transform-style: preserve-3d;
+    font-size: clamp(2rem,7vw,6.5rem);
+    font-weight: 900;
+    letter-spacing: .015em;
+    animation: webappHelloGlyphAlive 3.6s ease-in-out infinite;
+    animation-delay: calc(var(--phase-index) * -.12s);
+    will-change: transform,filter;
+}
+
+.webapp-moniker .glyph-red { color:#ff3030; text-shadow:0 0 10px rgba(255,48,48,.85),0 0 28px rgba(255,48,48,.4); }
+.webapp-moniker .glyph-orange { color:#ff7a00; text-shadow:0 0 10px rgba(255,122,0,.85),0 0 28px rgba(255,122,0,.4); }
+.webapp-moniker .glyph-yellow { color:#ffd34d; text-shadow:0 0 10px rgba(255,211,77,.85),0 0 28px rgba(255,211,77,.4); }
+.webapp-moniker .glyph-green { color:#52e05a; text-shadow:0 0 10px rgba(82,224,90,.85),0 0 28px rgba(82,224,90,.4); }
+.webapp-moniker .glyph-blue { color:#00a8ff; text-shadow:0 0 10px rgba(0,168,255,.85),0 0 28px rgba(0,168,255,.4); }
+.webapp-moniker .glyph-magenta { color:#ff2cff; text-shadow:0 0 10px rgba(255,44,255,.85),0 0 28px rgba(255,44,255,.4); }
+
+.webapp-moniker .flex-hello-state {
+    margin-top: .5rem;
+    font-size: clamp(.65rem,1vw,.9rem);
+    letter-spacing: .24em;
+    color: #8eefff;
+    opacity: .78;
+}
+
+@keyframes webappMonikerGridDrift {
+    from { background-position: 0 0,0 0; }
+    to { background-position: 0 44px,44px 0; }
+}
+@keyframes webappHelloOrbit {
+    0%,100% { transform:scale(.94) rotateX(64deg) rotateZ(-12deg); opacity:.28; }
+    50% { transform:scale(1.04) rotateX(64deg) rotateZ(12deg); opacity:.75; }
+}
+@keyframes webappMonikerKelpSway {
+    0%,100% { transform:translate3d(0,0,0) rotate(-.35deg) skewX(-.25deg); filter:saturate(1) brightness(.96); }
+    18% { transform:translate3d(-.22%,.35%,0) rotate(.45deg) skewX(.35deg); filter:saturate(1.06) brightness(1); }
+    38% { transform:translate3d(.34%,-.25%,0) rotate(1deg) skewX(.65deg); filter:saturate(1.15) brightness(1.08); }
+    62% { transform:translate3d(-.3%,-.05%,0) rotate(-.8deg) skewX(-.55deg); filter:saturate(1.08) brightness(1.02); }
+    82% { transform:translate3d(.2%,.28%,0) rotate(.3deg) skewX(.2deg); filter:saturate(1.12) brightness(1.04); }
+}
+@keyframes webappHelloGlyphAlive {
+    0%,100% { transform:translate3d(0,.02em,0) rotateX(-2deg) rotateY(-4deg) rotateZ(-1deg) scale(1); }
+    18% { transform:translate3d(-.02em,-.09em,0) rotateX(5deg) rotateY(8deg) rotateZ(2deg) scale(1.015); }
+    38% { transform:translate3d(.03em,-.18em,0) rotateX(-3deg) rotateY(-7deg) rotateZ(-3deg) scale(1.03); }
+    58% { transform:translate3d(-.025em,.08em,0) rotateX(6deg) rotateY(9deg) rotateZ(3deg) scale(1.01); }
+    78% { transform:translate3d(.02em,-.11em,0) rotateX(-5deg) rotateY(-8deg) rotateZ(-2deg) scale(1.02); }
+}
+
+@media (max-width:700px) {
+    .webapp-moniker .hello-glyph { font-size:clamp(1.8rem,11vw,3.8rem); }
+}
+
+@media (prefers-reduced-motion:reduce) {
+    .webapp-moniker .hello-moniker,
+    .webapp-moniker .hello-glyph,
+    .webapp-moniker .flex-hello-orbit { animation:none; }
+}
+
+/* Legacy static moniker styles retained for the gateway only. */
 /* WebPage moniker presentation parity. */
 .manifest-moniker {
     position: absolute;
