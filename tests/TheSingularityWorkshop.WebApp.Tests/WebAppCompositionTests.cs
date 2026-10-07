@@ -26,12 +26,12 @@ public sealed class WebAppCompositionTests
         var runtime = new WebAppCosRuntime(new WebAppMicroBundleCatalog());
 
         var root = runtime.Moniker.Root!;
-        var column = root.Find("moniker-column");
+        var moniker = root.Find("moniker");
 
-        Assert.Equal(3, column.Children.Count);
-        Assert.Equal("moniker-the", column.Children[0].Id);
-        Assert.Equal("moniker-singularity", column.Children[1].Id);
-        Assert.Equal("moniker-workshop", column.Children[2].Id);
+        Assert.Equal(3, moniker.Children.Count);
+        Assert.Equal("moniker-line-the", moniker.Children[0].Id);
+        Assert.Equal("moniker-line-singularity", moniker.Children[1].Id);
+        Assert.Equal("moniker-line-workshop", moniker.Children[2].Id);
     }
 
     [Fact]
