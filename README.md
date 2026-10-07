@@ -1,59 +1,59 @@
 # The Singularity Workshop WebApp
 
-The public face of **The Singularity Workshop**.
+The public browser manifestation of **The Singularity Workshop**.
 
-This site is intentionally more than a project README rendered in a browser. It is the Workshop's front door: a place to explain the ideas, demonstrate composition, introduce the growing family of projects, and eventually become the entry point into interactive Workshop experiences.
+WebApp is a host and proving ground: it presents Workshop Experiences in the browser while relying on the ecosystem's actual runtime and composition boundaries rather than recreating them.
 
-## Current experience
+## Current vertical slice
 
-The first public-facing slice establishes:
+The current development line demonstrates:
 
-- a strong Workshop identity without requiring a permanent logo;
-- a responsive landing experience;
-- a visual metaphor for independent pieces becoming a composed runtime;
-- a small manifest-style composition demonstration;
-- the architecture story in plain language;
-- links into the public GitHub ecosystem and NuGet packages;
-- zero third-party UI dependencies.
+- a responsive Workshop gateway;
+- explicit entry into a live Experience;
+- FSM_API-driven page progression;
+- independently instantiated living actors sharing a processing group;
+- FSM_COS composition through a host-owned MicroBundle catalog;
+- Moniker → gravity → hub progression;
+- a responsive browser manifestation.
 
-## Direction
+The current host retains a temporary local Moniker compatibility bundle (BundleId 3101) until the canonical Experiences artifact is published and verified for consumption.
 
-The WebApp will grow toward the public Workshop experience:
+## Architecture
 
-**discover → understand → demonstrate → enter the Workshop**
+The essential direction is:
 
-The long-term goal is not a static marketing site. It is a web doorway into experiences assembled from the same independent packages and composition boundaries described by the Workshop ecosystem.
+**WebApp → FSM_API / FSM_COS → MicroBundleDomain → host-owned or published MicroBundles**
+
+WebApp owns browser presentation and interaction. It does not become FSM_COS, a repository, a desktop runtime, or the owner of Experience semantics.
+
+## Documentation
+
+The documentation layer lives under [`docs/`](docs/DOCUMENTATION_INDEX.md).
+
+Start with:
+
+- [Documentation Index](docs/DOCUMENTATION_INDEX.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Implementation Notes](docs/IMPLEMENTATION_NOTES.md)
+- [Experience Manifestation Theory](docs/EXPERIENCE_MANIFESTATION_THEORY.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Security Model](docs/SECURITY_MODEL.md)
+
+External packages own their own detailed theory and API documentation. WebApp documents how it uses those abstractions.
 
 ## Development
 
 Requires .NET 8.
 
-```powershell
-dotnet restore
-dotnet build --configuration Release
-dotnet run
-```
+    dotnet restore
+    dotnet build --configuration Release
+    dotnet test tests/TheSingularityWorkshop.WebApp.Tests/TheSingularityWorkshop.WebApp.Tests.csproj --configuration Release
+    dotnet run
+
+No NuGet publication is performed by this repository without explicit release approval.
 
 ## Design principle
 
-The site should **edify, not mystify**. Visuals can make the ideas memorable, but the architecture shown here must remain faithful to the actual projects behind it.
+> **Edify, don't mystify.**
 
-
-## Runtime composition
-
-The WebApp now crosses the real FSM_COS boundary instead of only illustrating it.
-
-At process startup the host builds a runtime manifest containing the Workshop Moniker bootstrap request (3101), resolves that capability through the host-owned IMicroBundleCatalog, and executes it through FsmCos. The resulting RuntimeAssembly is then rendered by the Blazor GUI renderer.
-
-The important dependency direction is:
-
-**WebApp → FSM_COS → MicroBundleDomain → host-owned MicroBundle catalog**
-
-FSM_COS does not know that the Moniker exists. The host chooses what is available and what belongs in its startup manifest.
-
-The current branch contains a temporary WebApp-local Moniker bridge because the independent TheSingularityWorkshop.Experiences.Moniker package is not yet published. That bridge is intentionally shaped to disappear once the canonical package is available; the bundle identity remains 3101.
-
-The result is a real vertical slice:
-
-**startup manifest → FSM_COS → Moniker MicroBundle → semantic GUI tree → Blazor**
-
+The browser should make the Workshop understandable by showing the real architecture in action—not by replacing that architecture with a static imitation.
