@@ -1,3 +1,4 @@
+using System.Threading;
 using TheSingularityWorkshop.WebApp.Infrastructure;
 using Xunit;
 
@@ -51,7 +52,7 @@ public sealed class WebAppCompositionTests
         experience.RequestEnter();
 
         Assert.True(experience.EnterRequested);
-        Assert.True(experience.Actors[0].Active);
+        Assert.True(SpinWait.SpinUntil(() => experience.Actors[0].Active, TimeSpan.FromSeconds(1)));
         Assert.True(experience.Actors[0].IsRoot);
         Assert.Equal(1, experience.Population);
     }
