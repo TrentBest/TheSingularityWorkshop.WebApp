@@ -1,42 +1,85 @@
 # WebApp ↔ AnyApp Boundary
 
-## Purpose
+## Goal
 
-The browser and desktop runtime are complementary manifestations.
+Allow the browser manifestation to discover and open a published Experience in AnyApp and, when explicitly connected, exchange bounded runtime information.
 
-The WebApp is strong at reach, presentation, interaction, and browser capabilities. AnyApp is strong at local execution and capabilities unavailable to a browser.
+## Launch
 
-The boundary between them must remain a protocol boundary, not a remote shell.
+The current launch concept is:
 
-## Intended launch flow
+```
+anyapp://experience/{experienceId}/{version}/{contentHash}?token=...
+```
+
+The URI is a **launch mechanism**, not an authority mechanism.
+
+AnyApp must independently validate the requested Experience against its repository/runtime rules.
+
+## Bridge
+
+The local bridge is a loopback WebSocket protocol.
+
+The intended flow is:
 
 1. WebApp identifies an immutable published Experience.
-2. The user explicitly chooses to open it in AnyApp.
-3. A bounded launch request is created.
-4. AnyApp independently validates the requested identity.
-5. AnyApp resolves the artifact through its trusted path.
-6. A bounded session may be established if the Experience requires coordination.
+2. User explicitly chooses **Open in AnyApp**.
+3. WebApp creates a short-lived launch token.
+4. Browser invokes the registered `anyapp://` protocol.
+5. AnyApp starts or locates its local bridge.
+6. AnyApp validates the launch request.
+7. WebApp connects to the loopback endpoint.
+8. Both sides exchange versioned capability/session information.
+9. Explicit events and lifecycle updates may flow across the bridge.
 
-The exact URI and transport are implementation details and remain future work.
+## Security boundary
 
-## Forbidden responsibilities
+The bridge must never become a general-purpose command channel.
 
-The bridge must not become a channel for:
+Forbidden protocol responsibilities include:
 
-- arbitrary process execution;
-- arbitrary filesystem access;
-- arbitrary assembly loading requested by the browser;
-- shell commands;
-- credential transfer;
-- unrestricted local-network access.
+- arbitrary process execution
+- arbitrary filesystem access
+- arbitrary assembly loading requested by the browser
+- shell commands
+- credential transfer
+- unrestricted local-network access
 
-## Independence
+The bridge should instead expose a small, versioned vocabulary of operations.
 
-Neither side should require the other merely to start.
+## Trust
 
-This preserves the browser as a distribution surface and AnyApp as an independent local runtime.
+Trust should be layered:
 
-## Future session lifecycle
+1. browser user gesture
+2. launch-token validation
+3. loopback transport
+4. Origin allowlist
+5. session binding
+6. protocol version validation
+7. Experience identity validation
+8. artifact verification
+9. bounded command vocabulary
+
+Failure at any layer should fail closed.
+
+## Browser restrictions
+
+The implementation must account for browser security behavior around:
+
+- secure contexts
+- mixed content
+- local network permissions
+- WebSocket access to loopback
+- user gesture requirements for privileged browser APIs
+
+The protocol documentation therefore describes intended behavior; actual browser/device compatibility must be verified during integration.
+
+## Connection semantics
+
+Connection state should be visible to the user.
+
+Suggested lifecycle:
 
 ```
 Disconnected
@@ -54,6 +97,16 @@ Ready
 Disconnected
 ```
 
-Connection state should be visible to the user.
+An error should identify the boundary that failed rather than presenting a generic "something went wrong".
 
-The bridge should remain deliberately smaller than the runtime itself.
+## Independence
+
+Neither side should require the other merely to start.
+
+This preserves the value of the browser as a distribution surface and AnyApp as a local runtime.
+
+## Future direction
+
+The bridge can eventually carry carefully defined Experience events, telemetry, viewport/capability observations, and synchronization state.
+
+It should remain deliberately smaller than the runtime itself.
