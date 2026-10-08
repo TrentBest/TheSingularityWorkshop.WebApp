@@ -2,68 +2,85 @@
 
 ## Principle
 
-The browser is a powerful user-facing surface, but it must not gain authority merely because it is convenient.
+The browser is an untrusted execution environment and a powerful user-facing surface.
 
-> Convenience must never become ambient authority.
+The WebApp must never turn convenience into authority.
 
-## Published content
+## Boundaries
 
-When repository-backed Experiences are integrated, immutable content should be addressed by explicit artifact identity such as:
+### Published content
+
+Published Experience and MicroBundle identities are immutable references.
+
+Use:
 
 ```
 BundleId + Version + ContentHash
 ```
 
-A display name or URL alone is not sufficient artifact identity.
+to address an artifact.
 
-## Companion launch
+Never treat a display name or URL alone as sufficient artifact identity.
 
-A future AnyApp launch protocol should carry launch intent, not arbitrary instructions.
+### AnyApp launch
 
-AnyApp must independently validate requested Experience identity and obtain artifacts through its own trusted path.
+The `anyapp://` protocol accepts launch intent, not arbitrary instructions.
 
-## Local bridge
+AnyApp validates the requested identity and obtains artifacts through its own trusted path.
 
-A future browser/desktop bridge should establish explicit boundaries including:
+### Local bridge
 
-- origin validation;
-- short-lived launch/session tokens;
-- protocol version validation;
-- bounded message types;
-- message-size limits;
-- session state;
-- replay protection where applicable;
-- rate/resource limits;
-- explicit disconnect behavior.
+The loopback bridge should use:
+
+- Origin validation
+- short-lived launch/session tokens
+- protocol version validation
+- message size limits
+- bounded message types
+- session state
+- replay protection where applicable
+- rate/resource limits
+- explicit disconnect behavior
+
+### XR
+
+XR APIs are capability- and user-consent-driven. The WebApp should request only what the active Experience needs.
+
+## Data minimization
+
+Capability reports should contain only information needed for the current interaction.
+
+Browser user-agent/platform information should not become a general-purpose fingerprinting database.
 
 ## No ambient authority
 
-The WebApp should never be able to request:
+The WebApp should not be able to:
 
-- arbitrary desktop commands;
-- arbitrary filesystem access;
-- arbitrary assembly loading;
-- credential transfer;
-- unrestricted local-network operations.
+- read arbitrary desktop files
+- invoke arbitrary desktop commands
+- upload arbitrary assemblies to AnyApp
+- alter local runtime configuration without an explicit protocol contract
 
 ## Failure behavior
 
-Security failures should be bounded, visible to the user, and fail closed.
+Security failures should produce bounded, user-visible errors and terminate the affected operation.
 
 Do not silently downgrade from a verified artifact to an unverified artifact.
 
-## Threat model
+## Threat model to test
 
-Before any companion bridge is considered production-ready, test at minimum:
+Before calling the bridge production-ready, test at minimum:
 
-- forged launch requests;
-- expired or replayed tokens;
-- invalid origins;
-- malformed messages;
-- oversized messages;
-- unsupported protocol versions;
-- duplicate session messages;
-- disconnected peers;
-- artifact identity mismatch;
-- unavailable repositories;
-- browser refresh during a session.
+- forged launch URIs
+- missing/expired tokens
+- token replay
+- invalid Origin
+- malformed JSON
+- oversized messages
+- unsupported protocol versions
+- duplicate session messages
+- disconnected peers
+- artifact hash mismatch
+- unavailable repository
+- local-network permission denial
+- browser refresh during an active session
