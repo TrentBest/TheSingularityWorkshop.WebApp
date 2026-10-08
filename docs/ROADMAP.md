@@ -1,63 +1,73 @@
 # WebApp Roadmap
 
-## Phase 1 — Runtime proving ground — current
+## Phase 0 — Theory
 
-- [x] establish .NET 8 WebApp host
-- [x] establish responsive Workshop gateway
-- [x] execute a real FSM_API-driven page lifecycle
-- [x] instantiate independent living actors
-- [x] use FSM_COS for host-local MicroBundle composition
-- [x] establish the Moniker → gravity → hub experience sequence
-- [ ] make hub contents fully manifest-driven
-- [ ] extract hub destinations into independent MicroBundles
+- [x] establish WebApp repository
+- [x] define WebApp architectural position
+- [x] define Experience manifestation theory
+- [x] define WebApp ↔ AnyApp boundary
+- [x] define initial WebXR boundary
+- [ ] review theory against AnyApp, Experiences, FSM_COS, GUI, and MicroBundleRepository
 
-## Phase 2 — Public Experience surface
+## Phase 1 — MVP browser manifestation
 
+- [ ] establish the actual WebApp application structure
 - [ ] load published Experience identities
-- [ ] preserve immutable artifact identity
 - [ ] present Experience discovery
 - [ ] enter a published Experience
-- [ ] consume canonical Experiences artifacts rather than host-local compatibility bundles
-- [ ] expose useful deep dives without duplicating external package theory
+- [ ] preserve immutable artifact identity
+- [ ] add explicit **Open in AnyApp**
+- [ ] show AnyApp connection state
+- [ ] show shared Experience/session identity
+- [ ] exchange heartbeat and bounded events
+- [ ] handle unavailable companion/repository states cleanly
 
-## Phase 3 — Repository-backed composition
+## Phase 2 — Repository-backed Experiences
 
 - [ ] resolve immutable MicroBundle artifact addresses
 - [ ] consume published Experience manifests
-- [ ] verify artifact identity before use
+- [ ] remove assumptions about AnyApp's compiled-in bundle catalog
+- [ ] verify artifact hashes before use
 - [ ] make repository failures observable
-- [ ] remove host-local assumptions where published artifacts are available
 
-## Phase 4 — Companion manifestations
+## Phase 3 — Semantic presentation
 
-- [ ] explicit WebApp → AnyApp launch boundary
-- [ ] bounded local bridge/session protocol
-- [ ] capability/session visibility
-- [ ] partial-failure handling
-- [ ] optional WebXR capability discovery
+- [ ] consume GUI semantic representation where appropriate
+- [ ] keep browser rendering outside GUI Core
+- [ ] establish semantic observer/view concepts
+- [ ] introduce progressive detail where evidence supports it
+- [ ] preserve deterministic Experience identity
+
+## Phase 4 — XR
+
+- [ ] capability discovery
+- [ ] user-initiated immersive entry
+- [ ] semantic observer mapping
+- [ ] spatial interaction events
+- [ ] browser/desktop synchronization
+- [ ] test against actual target hardware
 
 ## Phase 5 — Forge
 
-The WebApp becomes a first-class Workshop access point for:
+The WebApp becomes a first-class Workshop access point for the Forge:
 
-- discover;
-- understand;
-- compose;
-- publish;
-- inspect;
-- launch;
-- connect.
+- discover
+- compose
+- publish
+- inspect
+- launch
+- connect
 
-Authoring should arrive only after the underlying artifact and manifest boundaries are stable.
+Authoring functionality should arrive only after the underlying artifact and manifest boundaries are stable.
 
 ## Non-goals
 
 The WebApp is not intended to:
 
-- become the desktop runtime;
-- duplicate FSM_COS;
-- become a general code execution service;
-- require Unity;
-- make WebXR mandatory;
-- make AnyApp mandatory;
-- treat browser state as immutable Experience state.
+- become the desktop runtime
+- duplicate FSM_COS
+- become a general code execution service
+- require Unity
+- make WebXR mandatory
+- make AnyApp mandatory
+- treat browser state as immutable Experience state
