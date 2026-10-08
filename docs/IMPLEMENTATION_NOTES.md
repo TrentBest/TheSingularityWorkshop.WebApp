@@ -1,46 +1,70 @@
 # Implementation Notes
 
-Implementation should extend the existing runtime architecture rather than grow a second architecture inside the WebApp.
+This repository currently begins as a theory-first shell.
 
-## Current implementation boundary
+Implementation should proceed from the boundaries documented here rather than growing a second runtime architecture inside the WebApp.
 
-The current host uses:
+## Dependency direction
 
-- .NET 8 Razor Components;
-- FSM_API 1.0.13 for runtime execution;
-- FSM_COS alpha.5 as the verified consumer boundary;
-- MicroBundleDomain 1.0.1 for MicroBundle contracts;
-- GUI packages where the host integration requires them.
+The intended dependency direction is:
 
-The WebApp currently retains a host-local Moniker compatibility bundle because the canonical Experiences Moniker artifact is not yet the published runtime dependency.
+```
+WebApp
+  ├── browser framework
+  ├── GUI semantic consumers/adapters
+  ├── Experience discovery client
+  └── AnyApp bridge client
 
-## Runtime discipline
+Experiences
+  └── published Experience/MicroBundle artifacts
 
-FSM_API execution is deferred where the API requires deferred processing. Tests must honor that lifecycle rather than forcing production code into synchronous behavior.
+FSM_COS
+  └── runtime composition
 
-Every living actor is an independent FSM instance. Actors may share a processing group without sharing state.
+MicroBundleRepository
+  └── artifact publication/discovery
+```
 
-## Future repository integration
+The WebApp should consume contracts; it should not reach inward and own the implementation of another layer.
 
-Published Experience manifests should reference immutable artifact identities.
+## First implementation slice
 
-Do not introduce a second ad-hoc artifact-addressing scheme inside WebApp.
+The first useful slice is intentionally small:
+
+1. load a published Experience catalog
+2. display its immutable identity
+3. open the Experience in the WebApp
+4. offer **Open in AnyApp**
+5. connect to the local bridge
+6. display connection/session state
+7. exchange heartbeat
+8. exchange one explicit Experience event
+
+That proves the architecture before adding authoring, XR rendering, or elaborate visual systems.
+
+## Repository integration
+
+Experience manifests should reference immutable MicroBundle artifact identities.
+
+Do not introduce another ad-hoc artifact addressing scheme in WebApp.
 
 ## Rendering
 
-Browser rendering belongs to the WebApp manifestation. Shared semantic contracts should remain free of browser-specific, WPF, WinUI, Unity, or renderer-engine types.
+Browser rendering may use whatever browser-native implementation is appropriate, but semantic meaning belongs to the shared GUI/Experience contracts.
+
+Do not add WPF, WinUI, Unity, Three.js, or browser DOM types to shared semantic contracts.
 
 ## Testing
 
-Tests should emphasize architectural boundaries:
+Tests should be organized around boundaries:
 
-- runtime composition;
-- manifest identity;
-- FSM lifecycle;
-- independent actor behavior;
-- deferred transition behavior;
-- responsive presentation assumptions;
-- future artifact identity preservation;
-- malformed external input.
+- manifest identity
+- catalog behavior
+- bridge protocol serialization
+- launch URI parsing
+- session lifecycle
+- malformed input
+- capability normalization
+- artifact identity preservation
 
 Integration tests should distinguish browser limitations from protocol correctness.
