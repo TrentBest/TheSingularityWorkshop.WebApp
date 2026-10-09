@@ -1,0 +1,112 @@
+@namespace TheSingularityWorkshop.WebApp.Components.Pages
+@page "/"
+@rendermode InteractiveServer
+@implements IDisposable
+@inject TheSingularityWorkshop.WebApp.Infrastructure.WebAppExperienceRuntime Experience
+@inject TheSingularityWorkshop.WebApp.Infrastructure.WebAppCosRuntime CosRuntime
+@using TheSingularityWorkshop.Workshop.Gui
+
+<PageTitle>The Singularity Workshop</PageTitle>
+
+<div class="workshop-root @(Experience.NavigationVisible ? "navigation-arrived" : "")">
+    @if (!Experience.EnterRequested)
+    {
+        <section class="gateway" aria-label="The Singularity Workshop gateway">
+            <div class="gateway-aura"></div>
+            <div class="gateway-mark" aria-hidden="true">[0]</div>
+            <p class="eyebrow">THE SINGULARITY WORKSHOP</p>
+            <div class="gateway-moniker">
+                <span>THE</span>
+                <strong>SINGULARITY</strong>
+                <span>WORKSHOP</span>
+            </div>
+            <p class="gateway-copy">
+                A living software workshop. Independent pieces. Explicit meaning.
+                Runtime composition.
+            </p>
+            <div class="gateway-warning">
+                <span class="warning-icon">!</span>
+                <div>
+                    <strong>YOU ARE ABOUT TO ENTER A LIVE EXPERIENCE</strong>
+                    <p>The interface is not a still page. Its inhabitants are driven independently by FSM_API.</p>
+                </div>
+            </div>
+            <button class="enter-button" @onclick="EnterWorkshop">
+                ENTER WORKSHOP <span>↗</span>
+            </button>
+        </section>
+    }
+    else
+    {
+        <main class="experience-stage" aria-label="Living Workshop experience">
+            <div class="stage-grid"></div>
+            <div class="stage-aura"></div>
+
+            @foreach (var actor in Experience.Actors)
+            {
+                if (!actor.Active)
+                    continue;
+
+                <div class="living-actor @(actor.IsRoot ? "root" : "") @(Experience.CurrentState == "Gravity" ? "gravity" : "")"
+                     style="@ActorStyle(actor)"
+                     aria-label="@actor.Lineage">
+                    @actor.Lineage
+                </div>
+            }
+
+            @if (Experience.MonikerVisible && !Experience.NavigationVisible)
+            {
+                <section class="experience-moniker" aria-label="The Singularity Workshop">
+                    @if (CosRuntime.Moniker.Root is { } monikerRoot)
+                    {
+                        @BlazorGuiRenderer.Render(monikerRoot)
+                    }
+                </section>
+            }
+
+            @if (Experience.NavigationVisible)
+            {
+                <aside class="workshop-hub" aria-label="Workshop navigation">
+                    <div class="hub-brand"><span>THE</span><strong>SINGULARITY</strong><span>WORKSHOP</span></div>
+                    <nav>
+                        <a href="#anyapp">ANYAPP</a>
+                        <a href="#explore">EXPLORE</a>
+                        <a href="#create">CREATE</a>
+                        <a href="#rendering">RENDERING</a>
+                    </nav>
+                </aside>
+            }
+
+            <div class="experience-status">
+                <span class="status-dot"></span>
+                <span>@Experience.CurrentState</span>
+                <span>POPULATION @Experience.Population / 100</span>
+            </div>
+        </main>
+    }
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        Experience.Changed += HandleChanged;
+    }
+
+    private void EnterWorkshop() => Experience.RequestEnter();
+
+    private void HandleChanged() => _ = InvokeAsync(StateHasChanged);
+
+    private static string ActorStyle(TheSingularityWorkshop.WebApp.Infrastructure.WebAppExperienceRuntime.ActorContext actor)
+    {
+        var color = actor.IsRoot ? "#ff7a00" : Palette[Math.Abs(actor.Lineage.GetHashCode()) % Palette.Length];
+        var opacity = actor.Y <= 100 ? 1 : Math.Clamp(1 - ((actor.Y - 100) / 30), 0, 1);
+        return $"left:{actor.X:0.###}%;top:{actor.Y:0.###}%;width:{actor.Size:0.##}px;height:{actor.Size:0.##}px;opacity:{opacity:0.###};transform:translate(-50%,-50%) rotate({actor.Rotation:0.##}deg);--flower-color:{color};";
+    }
+
+    private static readonly string[] Palette =
+    {
+        "#ff3030", "#ff7a00", "#ffd34d", "#52e05a", "#00a8ff", "#ff2cff"
+    };
+
+    public void Dispose() => Experience.Changed -= HandleChanged;
+}
