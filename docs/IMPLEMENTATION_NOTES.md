@@ -1,8 +1,8 @@
 # Implementation Notes
 
-This repository currently begins as a theory-first shell.
+This repository now has a concrete .NET 8 browser-host vertical slice. The development branch contains an ASP.NET Core Razor Components host using Interactive Server rendering, an FSM_COS composition path for a host-owned Moniker bundle, and an FSM_API-driven landing Experience with a 100-slot living-actor population.
 
-Implementation should proceed from the boundaries documented here rather than growing a second runtime architecture inside the WebApp.
+This is not yet a general page-authoring system. The current catalog resolves only the temporary local Moniker compatibility bundle, and the landing Experience is assembled by fixed host code. Implementation should preserve the working vertical slice while moving page intent into explicit artifacts and contracts rather than growing a second runtime architecture inside WebApp.
 
 ## Dependency direction
 
@@ -27,20 +27,28 @@ MicroBundleRepository
 
 The WebApp should consume contracts; it should not reach inward and own the implementation of another layer.
 
-## First implementation slice
+## Current implementation slice
 
-The first useful slice is intentionally small:
+The development branch currently proves a different, earlier vertical slice:
 
-1. load a published Experience catalog
-2. display its immutable identity
-3. open the Experience in the WebApp
-4. offer **Open in AnyApp**
-5. connect to the local bridge
-6. display connection/session state
-7. exchange heartbeat
-8. exchange one explicit Experience event
+1. start the ASP.NET Core browser host;
+2. compose a runtime manifest through FSM_COS;
+3. verify the Moniker bundle is present in the resulting `RuntimeAssembly`;
+4. run Gateway → LivingGui → Moniker → Gravity → Running progression through FSM_API;
+5. present the composed Moniker and living actors through Razor Components.
 
-That proves the architecture before adding authoring, XR rendering, or elaborate visual systems.
+The catalog is still host-owned and only resolves a temporary Moniker compatibility bundle (BundleId 3101). The landing Experience is fixed in `WebAppExperienceRuntime`; this is not proof of arbitrary page authoring or repository-backed artifact resolution.
+
+## Next implementation slice
+
+1. define a page/Experience artifact contract from existing canonical APIs;
+2. let authoring produce a manifest/configuration rather than host-specific runtime code;
+3. compose that declaration through FSM_COS;
+4. present the resulting Experience through the existing browser rendering boundary;
+5. test that an authored artifact can change the page without editing the host;
+6. then advance repository-backed discovery and the WebApp ↔ AnyApp boundary.
+
+Keep the browser presentation and FSM_API/FSM_COS ownership boundaries intact.
 
 ## Repository integration
 
