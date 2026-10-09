@@ -54,6 +54,8 @@ public sealed class WebAppCompositionTests
         Assert.True(experience.EnterRequested);
         Assert.True(SpinWait.SpinUntil(() => experience.Actors[0].Active, TimeSpan.FromSeconds(1)));
         Assert.True(experience.Actors[0].IsRoot);
-        Assert.Equal(1, experience.Population);
+        // The background FSM heartbeat may already have advanced reproduction by the time
+        // the root-activation spin wait completes; assert the invariant, not a timing snapshot.
+        Assert.InRange(experience.Population, 1, experience.Actors.Count);
     }
 }
