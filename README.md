@@ -1,4 +1,44 @@
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Renderer/development/docs/assets/moniker.svg)
+
 # The Singularity Workshop WebApp
+
+
+> **A browser host for Workshop Experiences—not a replacement for their runtime or composition boundaries.**
+
+WebApp turns a manifest-backed Workshop Experience into a browser-facing session while keeping presentation, FSM progression, and composition responsibilities separate.
+
+```mermaid
+flowchart TD
+  M[Experience manifest] --> C[FSM_COS composition]
+  C --> E[Experience runtime]
+  E --> F[FSM_API state progression]
+  F --> G[GUI / browser manifestation]
+  G --> O[Observer interaction]
+```
+
+## 🟦 01 What
+
+WebApp turns a manifest-backed Workshop Experience into a browser-facing session while keeping presentation, FSM progression, and composition responsibilities separate.
+
+## 🟣 02 Why
+
+The Workshop is easier to understand when each repository states its responsibility clearly and shows how it connects to the wider system—without claiming ownership of neighboring layers.
+
+## 🔺 03 How
+
+A host presents the Experience; FSM_API drives state progression; FSM_COS composes capabilities; GUI and browser adapters manifest the result.
+
+## 🟢 04 See it in a minute
+
+Run the repository's documented .NET 8 restore, build, and test commands below; then launch the WebApp host to follow the gateway → Moniker → hub path.
+
+## 🟪 05 Documentation and theory
+
+[Documentation Index](docs/DOCUMENTATION_INDEX.md) · [Architecture](docs/ARCHITECTURE.md) · [Implementation Notes](docs/IMPLEMENTATION_NOTES.md) · [Security Model](docs/SECURITY_MODEL.md)
+
+---
+
+## Detailed guide
 
 The public browser manifestation of **The Singularity Workshop**.
 
