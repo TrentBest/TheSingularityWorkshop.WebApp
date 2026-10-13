@@ -89,3 +89,6 @@ jobs:
       - name: Build source graph
         working-directory: WebApp
         run: dotnet build TheSingularityWorkshop.WebApp.sln --configuration Release --no-restore -p:WorkshopUseRepositorySources=true
+      - name: Test source graph
+        working-directory: WebApp
+        run: dotnet test tests/TheSingularityWorkshop.WebApp.Tests/TheSingularityWorkshop.WebApp.Tests.csproj --configuration Release -p:WorkshopUseRepositorySources=true
