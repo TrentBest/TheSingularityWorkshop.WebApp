@@ -32,3 +32,60 @@ jobs:
 
       - name: Test
         run: dotnet test tests/TheSingularityWorkshop.WebApp.Tests/TheSingularityWorkshop.WebApp.Tests.csproj --configuration Release --no-build --verbosity normal
+
+  source-integration:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout WebApp
+        uses: actions/checkout@v7
+        with:
+          path: WebApp
+
+      - name: Checkout FSM_API source
+        uses: actions/checkout@v7
+        with:
+          repository: TrentBest/FSM_API
+          ref: development
+          path: FSM_API
+
+      - name: Checkout FSM_UserIO source
+        uses: actions/checkout@v7
+        with:
+          repository: TrentBest/FSM_UserIO
+          ref: development
+          path: FSM_UserIO
+
+      - name: Checkout MicroBundleDomain source
+        uses: actions/checkout@v7
+        with:
+          repository: TrentBest/TheSingularityWorkshop.MicroBundleDomain
+          ref: development
+          path: TheSingularityWorkshop.MicroBundleDomain
+
+      - name: Checkout FSM_COS source
+        uses: actions/checkout@v7
+        with:
+          repository: TrentBest/TheSingularityWorkshop.FSM_COS
+          ref: development
+          path: TheSingularityWorkshop.FSM_COS
+
+      - name: Checkout GUI source
+        uses: actions/checkout@v7
+        with:
+          repository: TrentBest/TheSingularityWorkshop.GUI
+          ref: development
+          path: TheSingularityWorkshop.GUI
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore source graph
+        working-directory: WebApp
+        run: dotnet restore TheSingularityWorkshop.WebApp.sln -p:WorkshopUseRepositorySources=true
+
+      - name: Build source graph
+        working-directory: WebApp
+        run: dotnet build TheSingularityWorkshop.WebApp.sln --configuration Release --no-restore -p:WorkshopUseRepositorySources=true
