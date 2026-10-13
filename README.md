@@ -18,7 +18,7 @@ flowchart TD
 
 ## 🟦 01 What
 
-WebApp turns a manifest-backed Workshop Experience into a browser-facing session while keeping presentation, FSM progression, and composition responsibilities separate.
+It owns the browser host and interaction surface. Experience semantics stay in the Experience artifacts, state progression remains FSM_API-driven, and composition remains an FSM_COS responsibility.
 
 ## 🟣 02 Why
 
