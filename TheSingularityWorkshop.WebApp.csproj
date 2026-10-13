@@ -8,6 +8,10 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(WorkshopUseRepositorySources)' == 'true'">
+    <DefineConstants>$(DefineConstants);WORKSHOP_REPOSITORY_SOURCES</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- The test project lives beneath this host repository. Keep its source and generated artifacts out of the WebApp SDK project. -->
     <Compile Remove="tests/**/*.cs" />
