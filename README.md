@@ -22,7 +22,7 @@ WebApp turns a manifest-backed Workshop Experience into a browser-facing session
 
 ## 🟣 02 Why
 
-The Workshop is easier to understand when each repository states its responsibility clearly and shows how it connects to the wider system—without claiming ownership of neighboring layers.
+A browser host is most useful when it proves that an Experience can reach people without moving composition logic or Experience semantics into the web layer. Keeping those boundaries explicit makes the browser one manifestation of the Workshop, not a competing runtime.
 
 ## 🔺 03 How
 
