@@ -11,9 +11,15 @@ public sealed class WebAppCosRuntime
     {
         ArgumentNullException.ThrowIfNull(catalog);
 
+#if WORKSHOP_REPOSITORY_SOURCES
+        var manifest = new RuntimeManifest(
+            RuntimeId,
+            [new MicroBundleManifestEntry(WebAppMonikerMicroBundle.BundleId, "1.0.0")]);
+#else
         var manifest = new RuntimeManifest(
             RuntimeId,
             [MicroBundleDependencyRequest.Unconfigured(WebAppMonikerMicroBundle.BundleId)]);
+#endif
 
         Assembly = new FsmCos(catalog).Execute(manifest);
 
