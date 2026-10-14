@@ -24,7 +24,7 @@ It owns the browser host and interaction surface. Experience semantics stay in t
 
 A browser host is most useful when it proves that an Experience can reach people without moving composition logic or Experience semantics into the web layer. Keeping those boundaries explicit makes the browser one manifestation of the Workshop, not a competing runtime.
 
-## 🔺 03 How
+## 🩵 03 How
 
 A host presents the Experience; FSM_API drives state progression; FSM_COS composes capabilities; GUI and browser adapters manifest the result.
 
