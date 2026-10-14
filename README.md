@@ -30,7 +30,11 @@ A host presents the Experience; FSM_API drives state progression; FSM_COS compos
 
 ## 🟢 04 See it in a minute
 
-Run the repository's documented .NET 8 restore, build, and test commands below; then launch the WebApp host to follow the gateway → Moniker → hub path.
+**Visitor path and contributor path are not the same thing.** This repository does not currently document a verified public WebApp URL, so it would be misleading to promise a no-install, no-shell public demo here.
+
+The browser-host proving ground is [WebPage](https://github.com/TrentBest/WebPage). Its development README records the current local browser journey and links to the automated Chromium smoke-test evidence. That is a contributor verification route—not yet a public deployment claim.
+
+For local verification of this WebApp host, use the .NET 8 commands in [Development](#development). The expected journey is gateway → Moniker → hub; the architecture and implementation notes distinguish current behavior from the remaining runtime migration.
 
 ## 🟪 05 Documentation and theory
 
