@@ -1,0 +1,125 @@
+@namespace TheSingularityWorkshop.WebApp.Components.Pages
+@page "/explore"
+@rendermode InteractiveServer
+
+<PageTitle>Singularity Exploratorium · The Singularity Workshop</PageTitle>
+
+<main class="exploratorium">
+    <header class="exploratorium-header">
+        <a class="back-link" href="/">← RETURN TO WORKSHOP</a>
+        <p class="eyebrow">THE SINGULARITY WORKSHOP · DISCOVERY FLOOR</p>
+        <h1>Singularity <span>Exploratorium</span></h1>
+        <p class="intro">Wonder first. Touch something. Ask why. Try again.</p>
+        <p class="lede">
+            Not every discovery begins with a lesson. This is where ideas become things to play with:
+            build a chain, release a marble, change one small detail, and see what the world does.
+        </p>
+    </header>
+
+    <section class="institution-strip" aria-label="Ways to explore">
+        <article>
+            <span class="institution-mark lab">01</span>
+            <h2>Laboratory</h2>
+            <p>Investigate with controlled experiments, measurements, and repeatable evidence.</p>
+        </article>
+        <article>
+            <span class="institution-mark museum">02</span>
+            <h2>Museum</h2>
+            <p>Explore curated collections, context, history, and the ideas behind discoveries.</p>
+        </article>
+        <article class="active-institution">
+            <span class="institution-mark expo">03</span>
+            <h2>Exploratorium</h2>
+            <p>Discover through playful, surprising, hands-on experiences.</p>
+        </article>
+    </section>
+
+    <section class="exhibit-list" aria-labelledby="exhibits-heading">
+        <div class="section-heading">
+            <p class="eyebrow">FIRST EXHIBITS</p>
+            <h2 id="exhibits-heading">Choose something to wonder about.</h2>
+        </div>
+
+        <article class="exhibit-card domino-card">
+            <div class="exhibit-art domino-art" aria-hidden="true">
+                <span>▮</span><span>▮</span><span>▮</span><span>▮</span><span>▮</span><span>▮</span><span>▮</span>
+                <strong>CAUSE → EFFECT</strong>
+            </div>
+            <div class="exhibit-copy">
+                <p class="exhibit-type">DISCRETE CAUSALITY</p>
+                <h3>Domino Studio</h3>
+                <p>Compose a chain reaction. Change a gap, orientation, or support and see how one small decision can change the whole arrangement.</p>
+                <p class="maturity"><span></span> AUTHORING CONTRACT · PHYSICS-DRIVEN TOPPLING NOT YET VERIFIED</p>
+                <a href="https://github.com/TrentBest/TheSingularityWorkshop.Experiences/blob/development/experiences/DominoStudio/README.md" target="_blank" rel="noopener noreferrer">Inspect the exhibit design ↗</a>
+            </div>
+        </article>
+
+        <article class="exhibit-card marble-card">
+            <div class="exhibit-art marble-art" aria-hidden="true">
+                <svg viewBox="0 0 320 190" role="img" aria-label="Concept sketch of marbles travelling along an obstacle course">
+                    <path d="M18 32 C72 32 64 130 122 130 S176 44 220 70 S254 152 302 150" fill="none" stroke="#00eaff" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M18 47 C70 47 77 145 122 145 S177 59 220 85 S254 167 302 165" fill="none" stroke="#ff2cff" stroke-width="1.5" stroke-dasharray="4 7" opacity=".7"/>
+                    <circle cx="34" cy="32" r="7" fill="#ffd34d"/><circle cx="60" cy="39" r="5" fill="#52e05a"/>
+                    <circle cx="82" cy="75" r="6" fill="#ff7a00"/><circle cx="100" cy="110" r="5" fill="#00a8ff"/>
+                    <circle cx="141" cy="119" r="7" fill="#ff2cff"/><circle cx="164" cy="88" r="5" fill="#ffd34d"/>
+                    <circle cx="198" cy="61" r="6" fill="#52e05a"/><circle cx="237" cy="98" r="5" fill="#00a8ff"/>
+                    <circle cx="270" cy="145" r="7" fill="#ff7a00"/>
+                    <text x="18" y="184" fill="#9aa8b5" font-size="10" letter-spacing="2">MOTION · GRAVITY · COLLISION</text>
+                  </svg>
+            </div>
+            <div class="exhibit-copy">
+                <p class="exhibit-type">CONTINUOUS MOTION</p>
+                <h3>Marble Run</h3>
+                <p>Dream up ramps, funnels, and obstacles. The long-term spectacle: thousands of marbles flowing through one enormous course, with outcomes determined by real physical simulation.</p>
+                <p class="maturity"><span></span> SCENE CONTRACT · ROLLING SOLVER AND HIGH-COUNT PERFORMANCE NOT YET VERIFIED</p>
+                <a href="https://github.com/TrentBest/TheSingularityWorkshop.Experiences/blob/development/experiences/MarbleRun/README.md" target="_blank" rel="noopener noreferrer">Inspect the exhibit design ↗</a>
+            </div>
+        </article>
+    </section>
+
+    <footer class="exploratorium-footer">
+        <p class="eyebrow">THE RULE OF THE FLOOR</p>
+        <p><strong>Make someone say “Whoa—how did it do that?”</strong></p>
+        <p>Then give them a path to the theory, the tests, and the machinery that explains it.</p>
+        <a href="https://github.com/TrentBest/TheSingularityWorkshop.Experiences/blob/development/experiences/EXPERIENCE_DIRECTORY.md" target="_blank" rel="noopener noreferrer">Read the exhibit directory and implementation roadmap ↗</a>
+    </footer>
+</main>
+
+<style>
+    .exploratorium { min-height: 100vh; overflow-y: auto; padding: clamp(22px,5vw,64px); color: #edf6ff; background: radial-gradient(ellipse at 50% 0%,rgba(0,234,255,.10),transparent 42%),#020711; font-family: system-ui,sans-serif; }
+    .exploratorium-header,.institution-strip,.exhibit-list,.exploratorium-footer { max-width: 1120px; margin-inline: auto; }
+    .back-link,.exhibit-copy a,.exploratorium-footer a { color: #00eaff; text-decoration: none; }
+    .back-link { display: inline-block; margin-bottom: clamp(30px,6vh,64px); font-size: .7rem; letter-spacing: .14em; }
+    .eyebrow { color: #00eaff; font-size: .67rem; font-weight: 700; letter-spacing: .22em; }
+    h1 { margin: 12px 0; font-size: clamp(2.5rem,7vw,5.7rem); line-height: .98; letter-spacing: -.06em; }
+    h1 span { display: block; color: #ff2cff; }
+    .intro { margin: 24px 0 8px; color: #ffd34d; font-size: clamp(1.1rem,2.2vw,1.55rem); }
+    .lede { max-width: 690px; color: #aab8c7; line-height: 1.7; }
+    .institution-strip { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 42px; }
+    .institution-strip article { padding: 18px; border: 1px solid rgba(154,168,181,.18); background: rgba(255,255,255,.025); }
+    .institution-strip .active-institution { border-color: rgba(255,44,255,.55); background: rgba(255,44,255,.055); }
+    .institution-mark { display: inline-grid; place-items: center; width: 31px; height: 31px; border: 1px solid currentColor; font-size: .75rem; }
+    .lab { color: #52e05a; } .museum { color: #ffd34d; } .expo { color: #ff2cff; }
+    .institution-strip h2 { margin: 14px 0 7px; font-size: 1rem; }
+    .institution-strip p { margin: 0; color: #9aa8b5; font-size: .85rem; line-height: 1.55; }
+    .exhibit-list { margin-top: 76px; }
+    .section-heading h2 { margin-top: 8px; font-size: clamp(1.6rem,3.4vw,2.6rem); letter-spacing: -.035em; }
+    .exhibit-card { display: grid; grid-template-columns: minmax(220px,.85fr) minmax(0,1.15fr); gap: clamp(20px,4vw,42px); align-items: center; margin-top: 20px; padding: clamp(18px,3vw,32px); border: 1px solid rgba(0,234,255,.2); background: rgba(6,15,28,.82); }
+    .exhibit-art { display: flex; min-height: 210px; flex-wrap: wrap; align-content: center; align-items: end; justify-content: center; gap: 8px; padding: 18px; background: radial-gradient(circle,rgba(0,234,255,.08),transparent 70%); }
+    .domino-art span { width: 15px; height: 54px; border: 1px solid #00eaff; background: linear-gradient(135deg,rgba(0,234,255,.4),rgba(0,234,255,.03)); transform: rotate(9deg); box-shadow: 0 0 14px rgba(0,234,255,.16); }
+    .domino-art span:nth-child(2n) { height: 68px; transform: rotate(-12deg); border-color: #ff2cff; }
+    .domino-art span:nth-child(3n) { height: 42px; border-color: #ffd34d; }
+    .domino-art strong { flex-basis: 100%; margin-top: 22px; text-align: center; color: #9aa8b5; font-size: .65rem; letter-spacing: .2em; }
+    .marble-art svg { width: 100%; max-width: 360px; height: auto; }
+    .exhibit-type { color: #00eaff; font-size: .65rem; font-weight: 700; letter-spacing: .19em; }
+    .exhibit-copy h3 { margin: 8px 0; font-size: clamp(1.6rem,3vw,2.2rem); }
+    .exhibit-copy>p:not(.exhibit-type):not(.maturity) { color: #aab8c7; line-height: 1.7; }
+    .maturity { display: flex; align-items: flex-start; gap: 9px; margin: 18px 0; color: #ffd34d; font-size: .65rem; line-height: 1.5; letter-spacing: .07em; }
+    .maturity span { flex: 0 0 7px; width: 7px; height: 7px; margin-top: 4px; border-radius: 50%; background: #ffd34d; }
+    .exhibit-copy a,.exploratorium-footer a { font-size: .83rem; }
+    .exploratorium-footer { margin-top: 72px; padding: 28px 0 16px; border-top: 1px solid rgba(0,234,255,.22); }
+    .exploratorium-footer strong { font-size: clamp(1.2rem,3vw,2rem); }
+    .exploratorium-footer>p:not(.eyebrow) { color: #aab8c7; line-height: 1.6; }
+    @media(max-width:700px) { .institution-strip { grid-template-columns: 1fr; } .exhibit-card { grid-template-columns: 1fr; } .exhibit-art { min-height: 160px; } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior: auto!important; } }
+</style>
