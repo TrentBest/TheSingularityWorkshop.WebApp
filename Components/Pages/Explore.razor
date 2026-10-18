@@ -1,6 +1,7 @@
 @namespace TheSingularityWorkshop.WebApp.Components.Pages
 @page "/explore"
 @rendermode InteractiveServer
+@inject Microsoft.JSInterop.IJSRuntime JS
 
 <PageTitle>Singularity Exploratorium · The Singularity Workshop</PageTitle>
 
@@ -14,6 +15,12 @@
             No lesson to sit through before the fun begins. Build a chain, release a marble, change one small detail,
             and see what the world does. The learning is woven into the play; the explanations are there when curiosity strikes.
         </p>
+        <div class="voice-guide" aria-label="Optional spoken guide">
+            <button class="voice-button" @onclick="HearWelcome">▶ Hear the welcome</button>
+            <button class="voice-stop" @onclick="StopVoice">■ Stop voice</button>
+            <p class="voice-note">Optional narration uses your browser or device voice and starts only when you choose. No microphone is used.</p>
+            <p class="voice-status" role="status" aria-live="polite">@_voiceStatus</p>
+        </div>
     </header>
 
     <section class="institution-strip" aria-label="Ways to explore">
@@ -50,6 +57,7 @@
                 <h3>Domino Studio</h3>
                 <p>Compose a chain reaction. Change a gap, orientation, or support and see how one small decision can change the whole arrangement.</p>
                 <p class="maturity"><span></span> AUTHORING CONTRACT · PHYSICS-DRIVEN TOPPLING NOT YET VERIFIED</p>
+                <button class="exhibit-voice" @onclick="HearDominoes">▶ Tell me about dominoes</button>
                 <a href="https://github.com/TrentBest/TheSingularityWorkshop.Experiences/blob/development/experiences/DominoStudio/README.md" target="_blank" rel="noopener noreferrer">Inspect the exhibit design ↗</a>
             </div>
         </article>
@@ -75,6 +83,7 @@
                 <h3>Marble Run</h3>
                 <p>Dream up ramps, funnels, and obstacles. The long-term spectacle: thousands of marbles flowing through one enormous course, with outcomes determined by real physical simulation.</p>
                 <p class="maturity"><span></span> SCENE CONTRACT · ROLLING SOLVER AND HIGH-COUNT PERFORMANCE NOT YET VERIFIED</p>
+                <button class="exhibit-voice" @onclick="HearMarbles">▶ Tell me about marbles</button>
                 <a href="https://github.com/TrentBest/TheSingularityWorkshop.Experiences/blob/development/experiences/MarbleRun/README.md" target="_blank" rel="noopener noreferrer">Inspect the exhibit design ↗</a>
             </div>
         </article>
@@ -88,6 +97,44 @@
     </footer>
 </main>
 
+@code {
+    private string _voiceStatus = "Choose a voice guide whenever you feel curious.";
+
+    private async Task HearWelcome() => await Speak("Welcome to the Singularity Exploratorium. This is a place to play first and discover along the way. You do not need a lesson before you begin. Try an idea, notice what happens, change one small detail, and try again. If something surprises you, that is a wonderful place to start asking why. The explanations are here when you want them.");
+
+    private async Task HearDominoes() => await Speak("Welcome to Domino Studio. A domino chain is a tiny experiment in cause and effect. Each falling piece can pass motion to the next, but spacing, angle, and support all matter. Before you set up a chain, make a prediction. Will the next domino fall? Try changing just one gap, then compare what happens. A failed chain is not a wrong answer; it is a clue about the arrangement. The current exhibit design describes the authoring contract. Physics-driven domino toppling is still being verified.");
+
+    private async Task HearMarbles() => await Speak("Welcome to Marble Run. Imagine releasing a marble onto a ramp. Gravity changes its motion as it travels, and curves and obstacles redirect its path. Try predicting where it will go before you release it. What changes if the ramp is steeper, the curve tighter, or an obstacle moves? Watch for the difference between a beautiful animation and a result computed by a physics simulation. This page shows a concept sketch; a complete rolling solver and high-count performance are not yet verified.");
+
+    private async Task Speak(string narration)
+    {
+        try
+        {
+            var started = await JS.InvokeAsync<bool>("workshopVoice.speak", narration);
+            _voiceStatus = started
+                ? "Speaking with your browser or device voice. You can stop at any time."
+                : "Spoken narration is not supported by this browser. You can still read the guide on this page.";
+        }
+        catch (Microsoft.JSInterop.JSException)
+        {
+            _voiceStatus = "Spoken narration is unavailable right now. The written guide remains available."; 
+        }
+    }
+
+    private async Task StopVoice()
+    {
+        try
+        {
+            var stopped = await JS.InvokeAsync<bool>("workshopVoice.stop");
+            _voiceStatus = stopped ? "Voice stopped. Explore at your own pace." : "Voice control is not supported by this browser.";
+        }
+        catch (Microsoft.JSInterop.JSException)
+        {
+            _voiceStatus = "Voice control is unavailable right now.";
+        }
+    }
+}
+
 <style>
     .exploratorium { min-height: 100vh; overflow-y: auto; padding: clamp(22px,5vw,64px); color: #edf6ff; background: radial-gradient(ellipse at 50% 0%,rgba(0,234,255,.10),transparent 42%),#020711; font-family: system-ui,sans-serif; }
     .exploratorium-header,.institution-strip,.exhibit-list,.exploratorium-footer { max-width: 1120px; margin-inline: auto; }
@@ -98,6 +145,12 @@
     h1 span { display: block; color: #ff2cff; }
     .intro { margin: 24px 0 8px; color: #ffd34d; font-size: clamp(1.1rem,2.2vw,1.55rem); }
     .lede { max-width: 690px; color: #aab8c7; line-height: 1.7; }
+    .voice-guide { margin-top: 22px; padding: 16px 18px; border: 1px solid rgba(0,234,255,.22); background: rgba(0,234,255,.035); }
+    .voice-button,.voice-stop,.exhibit-voice { margin: 4px 8px 4px 0; padding: 10px 13px; border: 1px solid #00eaff; color: #edf6ff; background: rgba(0,234,255,.08); font: inherit; font-size: .82rem; cursor: pointer; }
+    .voice-button:hover,.exhibit-voice:hover { background: rgba(0,234,255,.18); }
+    .voice-stop { border-color: rgba(255,211,77,.65); color: #ffd34d; background: transparent; }
+    .voice-note,.voice-status { margin: 9px 0 0; color: #9aa8b5; font-size: .78rem; line-height: 1.5; }
+    .voice-status { min-height: 1.2em; color: #ffd34d; }
     .institution-strip { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 42px; }
     .institution-strip article { padding: 18px; border: 1px solid rgba(154,168,181,.18); background: rgba(255,255,255,.025); }
     .institution-strip .active-institution { border-color: rgba(255,44,255,.55); background: rgba(255,44,255,.055); }
@@ -128,6 +181,7 @@
     .maturity { display: flex; align-items: flex-start; gap: 9px; margin: 18px 0; color: #ffd34d; font-size: .65rem; line-height: 1.5; letter-spacing: .07em; }
     .maturity span { flex: 0 0 7px; width: 7px; height: 7px; margin-top: 4px; border-radius: 50%; background: #ffd34d; }
     .exhibit-copy a,.exploratorium-footer a { font-size: .83rem; }
+    .exhibit-voice { display: block; margin: 16px 0 10px; }
     .exploratorium-footer { margin-top: 72px; padding: 28px 0 16px; border-top: 1px solid rgba(0,234,255,.22); }
     .exploratorium-footer strong { font-size: clamp(1.2rem,3vw,2rem); }
     .exploratorium-footer>p:not(.eyebrow) { color: #aab8c7; line-height: 1.6; }
