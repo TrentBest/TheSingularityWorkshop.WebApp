@@ -150,7 +150,7 @@
 
     private async Task StopWorkshopVoiceOnDispose()
     {
-        try { await JS.InvokeVoidAsync("workshopVoice.stop"); }
+        try { await JS.InvokeAsync<bool>("workshopVoice.stop", Array.Empty<object>()); }
         catch (Microsoft.JSInterop.JSException) { }
     }
 }
