@@ -15,8 +15,14 @@
             No lesson to sit through before the fun begins. Build a chain, release a marble, change one small detail,
             and see what the world does. The learning is woven into the play; the explanations are there when curiosity strikes.
         </p>
+        <p class="lede digitens-intro">
+            And you are never exploring an empty universe. <strong>Digitens live, work, arrive, and depart throughout the Workshop.</strong>
+            They are the people behind its everyday services: a bank teller at the counter, a shopkeeper at a store, a technician in a laboratory,
+            a guide who can explain an exhibit. Their roles should make the world feel inhabited—and give you someone meaningful to interact with.
+        </p>
         <div class="voice-guide" aria-label="Optional spoken guide">
             <button class="voice-button" @onclick="HearWelcome">▶ Hear the welcome</button>
+            <button class="voice-button" @onclick="HearDigitens">▶ Meet the Digitens</button>
             <button class="voice-stop" @onclick="StopVoice">■ Stop voice</button>
             <p class="voice-note">Optional narration uses your browser or device voice and starts only when you choose. No microphone is used.</p>
             <p class="voice-status" role="status" aria-live="polite">@_voiceStatus</p>
@@ -102,6 +108,8 @@
 
     private async Task HearWelcome() => await Speak("Welcome to the Singularity Exploratorium. This is a place to play first and discover along the way. You do not need a lesson before you begin. Try an idea, notice what happens, change one small detail, and try again. If something surprises you, that is a wonderful place to start asking why. The explanations are here when you want them.");
 
+    private async Task HearDigitens() => await Speak("The Workshop is not meant to be an empty stage. Digitens are its digital citizens, arriving and departing as the universe changes. They hold the jobs you interact with in everyday life: a bank teller who helps with an account, a shopkeeper who serves a customer, a technician who tends an experiment, or a guide who helps you understand what you are seeing. They are not just decorative figures. The long-term vision is a living population with roles, workplaces, routines, and meaningful interactions. This page introduces that design principle; it does not claim that every service role or population simulation is already implemented.");
+
     private async Task HearDominoes() => await Speak("Welcome to Domino Studio. A domino chain is a tiny experiment in cause and effect. Each falling piece can pass motion to the next, but spacing, angle, and support all matter. Before you set up a chain, make a prediction. Will the next domino fall? Try changing just one gap, then compare what happens. A failed chain is not a wrong answer; it is a clue about the arrangement. The current exhibit design describes the authoring contract. Physics-driven domino toppling is still being verified.");
 
     private async Task HearMarbles() => await Speak("Welcome to Marble Run. Imagine releasing a marble onto a ramp. Gravity changes its motion as it travels, and curves and obstacles redirect its path. Try predicting where it will go before you release it. What changes if the ramp is steeper, the curve tighter, or an obstacle moves? Watch for the difference between a beautiful animation and a result computed by a physics simulation. This page shows a concept sketch; a complete rolling solver and high-count performance are not yet verified.");
@@ -145,6 +153,8 @@
     h1 span { display: block; color: #ff2cff; }
     .intro { margin: 24px 0 8px; color: #ffd34d; font-size: clamp(1.1rem,2.2vw,1.55rem); }
     .lede { max-width: 690px; color: #aab8c7; line-height: 1.7; }
+    .digitens-intro { margin-top: 12px; padding-left: 16px; border-left: 2px solid #ff2cff; }
+    .digitens-intro strong { color: #f4d5ff; }
     .voice-guide { margin-top: 22px; padding: 16px 18px; border: 1px solid rgba(0,234,255,.22); background: rgba(0,234,255,.035); }
     .voice-button,.voice-stop,.exhibit-voice { margin: 4px 8px 4px 0; padding: 10px 13px; border: 1px solid #00eaff; color: #edf6ff; background: rgba(0,234,255,.08); font: inherit; font-size: .82rem; cursor: pointer; }
     .voice-button:hover,.exhibit-voice:hover { background: rgba(0,234,255,.18); }
