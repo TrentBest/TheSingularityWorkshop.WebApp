@@ -319,6 +319,33 @@ button, a { font: inherit; }
     font: .78rem/1.5 system-ui, sans-serif;
 }
 
+.gateway-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: clamp(12px, 3vh, 24px);
+}
+
+.voice-intro-button, .voice-intro-stop {
+    padding: 10px 13px;
+    border: 1px solid rgba(0,234,255,.65);
+    background: rgba(0,234,255,.06);
+    color: #d9faff;
+    cursor: pointer;
+    font: .68rem/1.4 system-ui, sans-serif;
+    letter-spacing: .08em;
+}
+
+.voice-intro-button:hover { background: rgba(0,234,255,.18); }
+.voice-intro-stop { border-color: rgba(255,211,77,.65); color: #ffd34d; }
+.voice-intro-status {
+    min-height: 1.2em;
+    margin: 8px 0 0;
+    color: #9aa8b5;
+    font: .72rem/1.5 system-ui, sans-serif;
+}
+
 .enter-button {
     position: relative;
     flex: 0 0 auto;
