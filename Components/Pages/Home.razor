@@ -4,6 +4,7 @@
 @implements IDisposable
 @inject TheSingularityWorkshop.WebApp.Infrastructure.WebAppExperienceRuntime Experience
 @inject TheSingularityWorkshop.WebApp.Infrastructure.WebAppCosRuntime CosRuntime
+@inject Microsoft.JSInterop.IJSRuntime JS
 @using TheSingularityWorkshop.Workshop.Gui
 
 <PageTitle>The Singularity Workshop</PageTitle>
@@ -31,6 +32,11 @@
                     <p>The interface is not a still page. Its inhabitants are driven independently by FSM_API.</p>
                 </div>
             </div>
+            <div class="gateway-actions">
+                <button class="voice-intro-button" @onclick="HearWorkshop">▶ HEAR ABOUT THE WORKSHOP</button>
+                <button class="voice-intro-stop" @onclick="StopWorkshopVoice">■ STOP VOICE</button>
+            </div>
+            <p class="voice-intro-status" role="status" aria-live="polite">@_voiceStatus</p>
             <button class="enter-button" @onclick="EnterWorkshop">
                 ENTER WORKSHOP <span>↗</span>
             </button>
@@ -87,6 +93,34 @@
 </div>
 
 @code {
+    private string _voiceStatus = "Optional spoken introduction. Choose it when you're ready.";
+
+    private async Task HearWorkshop()
+    {
+        try
+        {
+            var started = await JS.InvokeAsync<bool>("workshopVoice.speak", new object?[] { "Welcome to the Singularity Workshop. What you are entering is more than a conventional webpage. It is a living software experience, assembled from independent pieces with explicit meaning and runtime composition. The scene's inhabitants are driven by a finite state machine, so you can watch behavior unfold rather than only read about it. Explore the gateway, enter the Workshop, and follow your curiosity. When you are ready, visit the Exploratorium for playful introductions to cause and effect, motion, and discovery." });
+            _voiceStatus = started ? "Speaking. You can stop the introduction at any time." : "Spoken narration is not supported here; the written introduction remains available.";
+        }
+        catch (Microsoft.JSInterop.JSException)
+        {
+            _voiceStatus = "Voice introduction is unavailable right now.";
+        }
+    }
+
+    private async Task StopWorkshopVoice()
+    {
+        try
+        {
+            var stopped = await JS.InvokeAsync<bool>("workshopVoice.stop", Array.Empty<object>());
+            _voiceStatus = stopped ? "Voice stopped." : "Voice control is not supported here.";
+        }
+        catch (Microsoft.JSInterop.JSException)
+        {
+            _voiceStatus = "Voice control is unavailable right now.";
+        }
+    }
+
     protected override void OnInitialized()
     {
         Experience.Changed += HandleChanged;
@@ -108,5 +142,15 @@
         "#ff3030", "#ff7a00", "#ffd34d", "#52e05a", "#00a8ff", "#ff2cff"
     };
 
-    public void Dispose() => Experience.Changed -= HandleChanged;
+    public void Dispose()
+    {
+        Experience.Changed -= HandleChanged;
+        _ = StopWorkshopVoiceOnDispose();
+    }
+
+    private async Task StopWorkshopVoiceOnDispose()
+    {
+        try { await JS.InvokeVoidAsync("workshopVoice.stop"); }
+        catch (Microsoft.JSInterop.JSException) { }
+    }
 }
