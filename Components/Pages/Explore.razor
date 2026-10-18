@@ -110,7 +110,7 @@
     {
         try
         {
-            var started = await JS.InvokeAsync<bool>("workshopVoice.speak", narration);
+            var started = await JS.InvokeAsync<bool>("workshopVoice.speak", new object?[] { narration });
             _voiceStatus = started
                 ? "Speaking with your browser or device voice. You can stop at any time."
                 : "Spoken narration is not supported by this browser. You can still read the guide on this page.";
@@ -125,7 +125,7 @@
     {
         try
         {
-            var stopped = await JS.InvokeAsync<bool>("workshopVoice.stop");
+            var stopped = await JS.InvokeAsync<bool>("workshopVoice.stop", Array.Empty<object>());
             _voiceStatus = stopped ? "Voice stopped. Explore at your own pace." : "Voice control is not supported by this browser.";
         }
         catch (Microsoft.JSInterop.JSException)
