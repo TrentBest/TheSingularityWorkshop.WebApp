@@ -20,7 +20,8 @@
 - [x] preserve FSM_API progression and FSM_COS composition boundaries in the current slice
 - [ ] replace the temporary host-owned Moniker compatibility bundle with a verified canonical artifact
 - [ ] load published Experience identities and immutable artifact addresses
-- [ ] present Experience discovery
+- [x] present an initial curated Exploratorium discovery page (manual entries; not yet manifest/artifact-driven)
+- [ ] load published Experience identities and immutable artifact addresses
 - [ ] enter a selected published Experience
 - [ ] preserve and verify immutable artifact identity end-to-end
 - [ ] add explicit **Open in AnyApp**
