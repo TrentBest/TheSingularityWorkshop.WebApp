@@ -46,9 +46,11 @@ The key contract is the request/result boundary. WebApp translates browser inter
 
 ## Relationship to AnyApp
 
-AnyApp is the application-level counterpart; WebApp provides its web-facing manifestation. Keep intent independent of presentation so a browser interaction and a non-web interaction can request the same meaningful operation without duplicating the operation's semantics.
+**WebApp is AnyApp hosted for the web.** “AnyApp” describes the application-host role; the existing Windows/WPF AnyApp executable is one manifestation of that role, not a desktop service WebApp must depend on. WebApp must accept web-authored/web-delivered Experience content, interpret its published manifest and configuration, and compose the requested runtime through FSM_COS. It must not require the desktop AnyApp process to be running, and it must not proxy every browser interaction to that desktop process.
 
-A request such as “enter this published Experience” is an application intent. The web layer may validate and submit that request, then present progress and results. It must not smuggle arbitrary code, assembly bytes, process instructions, or filesystem commands across the boundary.
+The shared principle is that application intent and Experience semantics stay independent of presentation. The web host supplies browser inputs and web-facing content; the desktop host supplies desktop inputs and desktop-facing content. Both hand the appropriate manifest/configuration and resolved MicroBundles to FSM_COS and present observable runtime results through their own host UI.
+
+A request such as “enter this published Experience” is an application intent. WebApp validates the request and its artifact identity, resolves the web-delivered content, composes it through FSM_COS, then presents progress and results. It must not smuggle arbitrary code, assembly bytes, process instructions, or filesystem commands across an untrusted browser boundary.
 
 ## Relationship to FSM_COS and FSM_API
 
@@ -56,11 +58,13 @@ FSM_COS remains the composition and execution boundary. WebApp supplies the brow
 
 The exact integration contract must be proven against the current FSM_COS API and canonical Experience artifacts before the transitional runtime is removed. A successful composition call alone is insufficient evidence that the composed Experience actually executes.
 
-### Source inspection: the missing seam
+### Source inspection: host-neutral contract and web content
 
-The current AnyApp `development` branch already defines `ExperienceManifest`, `AnyAppRuntime.Compose` / `ComposeAsync`, and `AnyAppWebBridge`. These are real candidate contracts, not hypothetical future types. However, AnyApp currently builds as a `net8.0-windows` WPF `WinExe`; WebApp must not take a project reference on that desktop executable as if it were a portable runtime library. `AnyAppWebBridge` is a local presentation bridge hosted by AnyApp, with a loopback HTTP endpoint and WebSocket support, not itself a general-purpose web-hosted composition service.
+The current AnyApp `development` branch defines `ExperienceManifest`, `AnyAppRuntime.Compose` / `ComposeAsync`, and `AnyAppWebBridge`. The manifest/runtime code is a useful reference for the intended host contract, but those types currently live in a `net8.0-windows` WPF `WinExe` project. WebApp must not reference the desktop executable as if it were a portable runtime library, and it must not treat the local `AnyAppWebBridge` as the required execution service.
 
-Therefore the next architectural decision is to prove which seam is intended: (a) extract/reuse a host-neutral application/runtime contract that both hosts can consume, or (b) define and test a narrow protocol to a running AnyApp host. The answer must follow the intended product behavior—not a convenience reference. The current WebApp `WebAppCosRuntime` is separate: it composes only the local `WebAppMonikerMicroBundle`, while `WebAppExperienceRuntime` separately creates and ticks its own page/actor FSMs. The two paths are not yet connected.
+The correct direction is **WebApp itself performs the web-host role**: receive web input; validate a host-neutral Experience manifest and its immutable artifact identity; resolve the referenced web-delivered MicroBundles/configuration; compose them through FSM_COS; and present state/results in the browser. Extract or reuse the manifest and request/result contracts in a host-neutral assembly if needed, without making the web host depend on desktop UI or desktop lifecycle. The desktop AnyApp and WebApp are sibling host manifestations over the same composition architecture, not a client/server pair by default.
+
+The current WebApp `WebAppCosRuntime` composes only its local `WebAppMonikerMicroBundle`, while `WebAppExperienceRuntime` separately creates and ticks its own page/actor FSMs. Neither path yet proves manifest-driven web content composition followed by canonical Experience execution. That end-to-end path is the central migration target.
 
 ## Relationship to WebPage
 
