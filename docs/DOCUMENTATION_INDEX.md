@@ -14,6 +14,7 @@ The WebApp documentation is layered so that the repository explains its own role
 - [WebApp ↔ AnyApp](WEBAPP_ANYAPP_BOUNDARY.md) — future companion boundary.
 - [WebXR](WEBXR.md) — future browser/XR manifestation.
 - [Security Model](SECURITY_MODEL.md) — trust and authority boundaries.
+- [Release Readiness](WEBAPP_READINESS.md) — verified release gates, current estimate, and outstanding blockers.
 
 ## Documentation ownership
 
