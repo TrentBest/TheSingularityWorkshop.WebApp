@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">WebApp and AnyApp runtime types — observed architecture</title>
+  <desc id="desc">UML-style data cards for current WebApp types and the existing AnyApp contracts. Solid arrows show observed source dependencies. A dashed arrow marks the intended browser request boundary that is not yet wired end to end.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#64748b"/></marker>
+    <marker id="dashedArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+    <style>
+      .bg{fill:#f8fafc}.head{font:700 27px system-ui,sans-serif;fill:#0f172a}.sub{font:15px system-ui,sans-serif;fill:#475569}
+      .card{fill:#fff;stroke:#94a3b8;stroke-width:2;rx:10}.web{stroke:#0284c7}.any{stroke:#7c3aed}.legacy{stroke:#b45309;stroke-dasharray:7 5}
+      .barWeb{fill:#e0f2fe}.barAny{fill:#ede9fe}.barLegacy{fill:#fef3c7}
+      .ns{font:12px ui-monospace,monospace;fill:#475569}.kind{font:700 12px system-ui,sans-serif;fill:#334155}.name{font:700 18px system-ui,sans-serif;fill:#0f172a}
+      .member{font:14px ui-monospace,monospace;fill:#334155}.divider{stroke:#cbd5e1;stroke-width:1}.edge{stroke:#64748b;stroke-width:2.3;fill:none;marker-end:url(#arrow)}.target{stroke:#d97706;stroke-width:2.5;stroke-dasharray:8 6;fill:none;marker-end:url(#dashedArrow)}
+      .label{font:13px system-ui,sans-serif;fill:#475569}.targetLabel{font:700 13px system-ui,sans-serif;fill:#b45309}.foot{font:13px system-ui,sans-serif;fill:#64748b}
+    </style>
+  </defs>
+  <rect class="bg" width="1600" height="1120"/>
+  <text class="head" x="52" y="52">WebApp × AnyApp — observed runtime contracts</text>
+  <text class="sub" x="52" y="80">Source-grounded UML data cards · solid = implemented dependency · dashed amber = intended but not yet proven end-to-end</text>
+
+  <!-- WebApp composition -->
+  <rect class="card web" x="55" y="130" width="450" height="245"/>
+  <rect class="barWeb" x="57" y="132" width="446" height="70" rx="8"/>
+  <text class="ns" x="75" y="154">TheSingularityWorkshop.WebApp.Infrastructure</text>
+  <text class="kind" x="75" y="176">class</text><text class="name" x="128" y="178">WebAppCosRuntime</text>
+  <line class="divider" x1="55" y1="202" x2="505" y2="202"/>
+  <text class="member" x="75" y="228">+ RuntimeId : ulong</text>
+  <text class="member" x="75" y="252">+ Assembly : RuntimeAssembly</text>
+  <text class="member" x="75" y="276">+ Moniker : WebAppMonikerMicroBundle</text>
+  <line class="divider" x1="55" y1="294" x2="505" y2="294"/>
+  <text class="member" x="75" y="320">+ .ctor(catalog)</text>
+  <text class="member" x="75" y="344">  FsmCos(catalog).Execute(manifest)</text>
+
+  <rect class="card web" x="55" y="430" width="450" height="220"/>
+  <rect class="barWeb" x="57" y="432" width="446" height="70" rx="8"/>
+  <text class="ns" x="75" y="454">TheSingularityWorkshop.WebApp.Infrastructure</text>
+  <text class="kind" x="75" y="476">class · implements IMicroBundleCatalog</text>
+  <text class="name" x="75" y="495">WebAppMicroBundleCatalog</text>
+  <line class="divider" x1="55" y1="502" x2="505" y2="502"/>
+  <text class="member" x="75" y="528">- _moniker : WebAppMonikerMicroBundle</text>
+  <line class="divider" x1="55" y1="546" x2="505" y2="546"/>
+  <text class="member" x="75" y="572">+ TryResolve(id, version, out bundle)</text>
+  <text class="member" x="75" y="596">+ TryResolve(id, out bundle)</text>
+  <text class="member" x="75" y="624">Only one compiled local bundle is resolvable.</text>
+
+  <rect class="card web" x="55" y="710" width="450" height="245"/>
+  <rect class="barWeb" x="57" y="712" width="446" height="70" rx="8"/>
+  <text class="ns" x="75" y="734">TheSingularityWorkshop.WebApp.Infrastructure</text>
+  <text class="kind" x="75" y="756">class · implements IMicroBundle</text>
+  <text class="name" x="75" y="775">WebAppMonikerMicroBundle</text>
+  <line class="divider" x1="55" y1="782" x2="505" y2="782"/>
+  <text class="member" x="75" y="808">+ BundleId = 3101</text>
+  <text class="member" x="75" y="832">+ Descriptor : MicroBundleDescriptor</text>
+  <text class="member" x="75" y="856">+ Root : GuiNode?</text>
+  <line class="divider" x1="55" y1="874" x2="505" y2="874"/>
+  <text class="member" x="75" y="900">+ Load(context)</text>
+  <text class="member" x="75" y="924">+ Arbitrate(context, roundIndex)</text>
+
+  <!-- AnyApp canonical contract -->
+  <rect class="card any" x="650" y="130" width="440" height="245"/>
+  <rect class="barAny" x="652" y="132" width="436" height="70" rx="8"/>
+  <text class="ns" x="670" y="154">TheSingularityWorkshop.AnyApp</text>
+  <text class="kind" x="670" y="176">static class</text><text class="name" x="760" y="178">AnyAppRuntime</text>
+  <line class="divider" x1="650" y1="202" x2="1090" y2="202"/>
+  <text class="member" x="670" y="228">+ Compose(manifest, config?)</text>
+  <text class="member" x="670" y="252">  : RuntimeAssembly</text>
+  <text class="member" x="670" y="276">+ ComposeAsync(experience, endpoint, token)</text>
+  <line class="divider" x1="650" y1="294" x2="1090" y2="294"/>
+  <text class="member" x="670" y="320">Builds FsmCos with AnyAppMicroBundleCatalog</text>
+  <text class="member" x="670" y="344">Repository path preloads artifact closure.</text>
+
+  <rect class="card any" x="650" y="430" width="440" height="245"/>
+  <rect class="barAny" x="652" y="432" width="436" height="70" rx="8"/>
+  <text class="ns" x="670" y="454">TheSingularityWorkshop.AnyApp</text>
+  <text class="kind" x="670" y="476">record</text><text class="name" x="740" y="478">ExperienceManifest</text>
+  <line class="divider" x1="650" y1="502" x2="1090" y2="502"/>
+  <text class="member" x="670" y="528">+ ExperienceId, Version, RuntimeId</text>
+  <text class="member" x="670" y="552">+ Bundles : IReadOnlyList&lt;ExperienceBundleRequest&gt;</text>
+  <text class="member" x="670" y="576">+ Intent : SemanticIntent?</text>
+  <line class="divider" x1="650" y1="594" x2="1090" y2="594"/>
+  <text class="member" x="670" y="620">+ ToRuntimeManifest()</text>
+  <text class="member" x="670" y="644">+ CreateConfigurationSource()</text>
+
+  <rect class="card any" x="650" y="730" width="440" height="225"/>
+  <rect class="barAny" x="652" y="732" width="436" height="70" rx="8"/>
+  <text class="ns" x="670" y="754">TheSingularityWorkshop.AnyApp</text>
+  <text class="kind" x="670" y="776">class · IDisposable</text>
+  <text class="name" x="670" y="795">AnyAppWebBridge</text>
+  <line class="divider" x1="650" y1="802" x2="1090" y2="802"/>
+  <text class="member" x="670" y="828">+ Endpoint : Uri</text>
+  <text class="member" x="670" y="852">+ CommandReceived event</text>
+  <text class="member" x="670" y="876">+ Configure(manifest) · Start()</text>
+  <text class="member" x="670" y="900">+ SetState(state, hubVisible)</text>
+  <text class="member" x="670" y="924">HTTP /state, /command + WebSocket;</text>
+  <text class="member" x="670" y="944">launch token and Origin checks.</text>
+
+  <!-- Existing legacy host runtime -->
+  <rect class="card legacy" x="1190" y="130" width="355" height="305"/>
+  <rect class="barLegacy" x="1192" y="132" width="351" height="70" rx="8"/>
+  <text class="ns" x="1210" y="154">TheSingularityWorkshop.WebApp.Infrastructure</text>
+  <text class="kind" x="1210" y="176">class · IDisposable · transitional</text>
+  <text class="name" x="1210" y="195">WebAppExperienceRuntime</text>
+  <line class="divider" x1="1190" y1="202" x2="1545" y2="202"/>
+  <text class="member" x="1210" y="228">- _pageGroup, _actorGroup</text>
+  <text class="member" x="1210" y="252">- _actors : List&lt;ActorContext&gt;</text>
+  <text class="member" x="1210" y="276">- _heartbeat : Thread</text>
+  <line class="divider" x1="1190" y1="294" x2="1545" y2="294"/>
+  <text class="member" x="1210" y="320">+ RequestEnter()</text>
+  <text class="member" x="1210" y="344">+ CurrentState / Population / Ticks</text>
+  <text class="member" x="1210" y="368">Creates page + actor FSMs in host;</text>
+  <text class="member" x="1210" y="392">preallocates 100 contexts; 33 ms loop.</text>
+  <text class="member" x="1210" y="416">Not connected to composed Assembly.</text>
+
+  <rect x="1190" y="500" width="355" height="190" rx="10" fill="#fff7ed" stroke="#d97706" stroke-width="2"/>
+  <text class="kind" x="1210" y="530">TARGET CONTRACT — NOT YET WIRED</text>
+  <text class="member" x="1210" y="562">Browser event</text>
+  <text class="member" x="1210" y="588">→ validated request / intent</text>
+  <text class="member" x="1210" y="614">→ AnyApp request/runtime boundary</text>
+  <text class="member" x="1210" y="640">→ observable result → browser UI</text>
+  <text class="label" x="1210" y="666">No WebApp-owned semantic heartbeat.</text>
+
+  <!-- relationships -->
+  <path class="edge" d="M280 430 L280 375"/>
+  <text class="label" x="292" y="407">catalog input</text>
+  <path class="edge" d="M280 710 L280 650"/>
+  <text class="label" x="292" y="687">resolves bundle</text>
+  <path class="edge" d="M505 520 C570 520 575 252 650 252"/>
+  <text class="label" x="520" y="385">current source graph</text>
+  <path class="edge" d="M870 430 L870 375"/>
+  <text class="label" x="884" y="407">manifest input</text>
+  <path class="edge" d="M870 730 L870 675"/>
+  <text class="label" x="884" y="706">Configure(manifest)</text>
+  <path class="target" d="M505 165 C565 165 585 165 650 165"/>
+  <text class="targetLabel" x="522" y="148">intended adapter path</text>
+  <path class="target" d="M1090 560 C1130 560 1150 595 1190 595"/>
+  <path class="target" d="M1190 595 C1155 760 1120 975 1080 975 C830 1010 520 1005 350 955"/>
+  <text class="targetLabel" x="1120" y="735">request/result protocol</text>
+
+  <rect x="55" y="990" width="1490" height="82" rx="10" fill="#e2e8f0"/>
+  <text class="kind" x="78" y="1018">Important boundary finding</text>
+  <text class="sub" x="78" y="1042">AnyApp already defines ExperienceManifest, AnyAppRuntime.Compose/ComposeAsync, and AnyAppWebBridge. WebApp currently composes a fixed local Moniker</text>
+  <text class="sub" x="78" y="1062">bundle separately and runs a private landing simulation. The exact web-to-AnyApp handoff and canonical lifecycle still require integration tests.</text>
+  <text class="foot" x="55" y="1100">Generated from source inspection of AnyApp/development and WebApp/development; update this diagram when public contracts change.</text>
+</svg>
