@@ -5,7 +5,7 @@
 - [x] establish WebApp repository
 - [x] define WebApp architectural position
 - [x] define Experience manifestation theory
-- [x] define WebApp ↔ AnyApp boundary
+- [x] define WebApp as the web-host manifestation of the AnyApp role
 - [x] define initial WebXR boundary
 - [x] establish a .NET 8 ASP.NET Core Razor Components host
 - [x] compose a host-owned Moniker bundle through FSM_COS
@@ -23,16 +23,16 @@
 - [ ] load published Experience identities and immutable artifact addresses
 - [ ] enter a selected published Experience
 - [ ] preserve and verify immutable artifact identity end-to-end
-- [ ] add explicit **Open in AnyApp**
-- [ ] show AnyApp connection state
-- [ ] show shared Experience/session identity
-- [ ] exchange heartbeat and bounded events
-- [ ] handle unavailable companion/repository states cleanly
+- [ ] add explicit **Open in desktop AnyApp** only for Experiences that request a desktop companion
+- [ ] show optional desktop companion connection state
+- [ ] show shared Experience/session identity when a companion is actually connected
+- [ ] exchange bounded events across the optional companion boundary
+- [ ] handle unavailable desktop companion or repository states cleanly without blocking web-hosted execution
 
 ## Phase 2 — Repository-backed Experiences
 
 - [ ] resolve immutable MicroBundle artifact addresses
-- [ ] consume published Experience manifests
+- [ ] consume published Experience manifests through a host-neutral manifest contract
 - [ ] remove assumptions about AnyApp's compiled-in bundle catalog
 - [ ] verify artifact hashes before use
 - [ ] make repository failures observable
@@ -64,7 +64,7 @@ WebApp is the browser manifestation and presentation surface. It must be able to
 - preview the resulting Experience through WebApp's existing browser presentation path
 - discover and inspect published Experiences
 - publish only after artifact identity, authorization, and repository boundaries are proven
-- launch and connect to AnyApp where the Experience declares that capability
+- optionally launch/connect to desktop AnyApp where an Experience explicitly declares that companion capability; this must not be required for WebApp's own FSM_COS execution
 
 Authoring and publication must follow stable artifact and manifest boundaries; the current fixed landing Experience is a foundation, not a general page builder.
 
