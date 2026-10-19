@@ -123,8 +123,6 @@
   <text class="label" x="292" y="407">catalog input</text>
   <path class="edge" d="M280 710 L280 650"/>
   <text class="label" x="292" y="687">resolves bundle</text>
-  <path class="edge" d="M505 520 C570 520 575 252 650 252"/>
-  <text class="label" x="520" y="385">current source graph</text>
   <path class="edge" d="M870 430 L870 375"/>
   <text class="label" x="884" y="407">manifest input</text>
   <path class="edge" d="M870 730 L870 675"/>
