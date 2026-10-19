@@ -70,7 +70,7 @@ The current WebApp `WebAppCosRuntime` composes only its local `WebAppMonikerMicr
 
 WebPage is a consumer/proving ground for web experiences, not the architectural definition of WebApp. Avoid moving WebPage-specific information architecture, landing-page choreography, or a showcase simulation into the WebApp package's core purpose.
 
-## Artifact identity
+## Artifact identity and materialization
 
 Where WebApp presents or requests a published artifact, preserve its immutable identity:
 
@@ -79,6 +79,10 @@ BundleId + Version + ContentHash
 ```
 
 Resolve and validate manifests, verify content hashes, and fail closed when the requested artifact cannot be validated. Do not silently mutate identity or substitute a local demo artifact as if it were canonical.
+
+There is one additional contract gap that must be solved before claiming repository-backed execution: the repository Core API returns a hash-verified `MicroBundleArtifact` containing bytes, while FSM_COS's `IMicroBundleCatalog` resolves an already-instantiated `IMicroBundle`. The inspected public contracts do not, by themselves, define how those bytes become a trusted `IMicroBundle` instance.
+
+The implementation must use an explicit, reviewed artifact materialization/registration contract that preserves version and content identity. Do **not** fill this gap with blind loading or execution of arbitrary assemblies supplied by a browser or repository. The correct format and materializer must come from the Workshop's canonical artifact model. Until that is established, WebApp can validate and retrieve artifact bytes, but must not claim that this alone makes the artifacts composable or executable.
 
 ## State and observability
 
