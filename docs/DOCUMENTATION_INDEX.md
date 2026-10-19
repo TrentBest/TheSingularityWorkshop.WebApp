@@ -11,7 +11,7 @@ The WebApp documentation is layered so that the repository explains its own role
 
 ## Boundaries
 
-- [WebApp ↔ AnyApp](WEBAPP_ANYAPP_BOUNDARY.md) — future companion boundary.
+- [WebApp ↔ AnyApp](WEBAPP_ANYAPP_BOUNDARY.md) — optional desktop companion protocol, separate from WebApp's own host/runtime path.
 - [WebXR](WEBXR.md) — future browser/XR manifestation.
 - [Security Model](SECURITY_MODEL.md) — trust and authority boundaries.
 - [Release Readiness](WEBAPP_READINESS.md) — verified release gates, current estimate, and outstanding blockers.
