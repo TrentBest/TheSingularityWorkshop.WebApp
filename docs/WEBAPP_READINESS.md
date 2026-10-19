@@ -13,7 +13,7 @@
 - The solution has a test project covering FSM_COS startup composition, Moniker structure, preallocated actor contexts, and FSM-driven entry.
 - The public-feed package reference has been changed from FSM_COS `0.1.0-alpha.5` to `0.1.0-alpha.7`.
 - Third-party GitHub Actions in the build workflow have been changed from movable version tags to the verified immutable commit pins used by the FSM_COS development workflow.
-- CI runs for the dependency and workflow changes are pending verification: [run 153](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39327389272) and [run 154](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39327412289).
+- CI evidence: [run 153](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39327389272) and [run 154](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39327412289) confirm that package-based restore currently fails because alpha.7 is not published; the source-integration job in run 154 restored successfully and is building the development source graph.
 
 ## Release gates
 
@@ -21,7 +21,7 @@
 
 - [x] Pin GitHub Actions to immutable commit SHAs.
 - [x] Align the published-package path to FSM_COS alpha.7.
-- [ ] Verify public NuGet restore/build/test against alpha.7 in CI.
+- [ ] Verify public NuGet restore/build/test against alpha.7 in CI. **Current blocker:** run 153 and run 154 failed package restore because NuGet.org does not yet contain FSM_COS alpha.7 (nearest published version reported by CI: alpha.6). Do not publish it from WebApp; validate the development source graph while alpha.7 remains unpublished.
 - [ ] Add a direct and transitive NuGet vulnerability audit that fails on findings.
 - [ ] Verify the source-integration workflow builds and tests against current development dependencies.
 - [ ] Verify warning-free Release build and complete test results after the latest commits.
