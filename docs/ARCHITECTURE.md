@@ -4,6 +4,8 @@
 
 ![WebApp to AnyApp bridge](assets/webapp-anyapp-bridge.svg)
 
+![Source-grounded runtime UML](assets/webapp-anyapp-runtime-uml.svg)
+
 **WebApp is AnyApp for the web.** Its job is to give the Workshop's application/composition boundary a browser-facing surface: web-based user input, browser events and capabilities, and presentation of observable results.
 
 It is an adapter—not a second application runtime, not an alternative composition engine, and not the owner of Experience semantics or lifecycle. The existing bridge SVG describes a safety boundary; it does not mean WebApp should take over the execution behind that boundary.
@@ -53,6 +55,12 @@ A request such as “enter this published Experience” is an application intent
 FSM_COS remains the composition and execution boundary. WebApp supplies the browser-facing inputs and presentation around that boundary; it must not create a second lifecycle owner merely because the browser needs periodic rendering. FSM_API state progression should be driven according to the canonical runtime/process-group contract, not a WebApp-owned heartbeat that becomes the semantic clock.
 
 The exact integration contract must be proven against the current FSM_COS API and canonical Experience artifacts before the transitional runtime is removed. A successful composition call alone is insufficient evidence that the composed Experience actually executes.
+
+### Source inspection: the missing seam
+
+The current AnyApp `development` branch already defines `ExperienceManifest`, `AnyAppRuntime.Compose` / `ComposeAsync`, and `AnyAppWebBridge`. These are real candidate contracts, not hypothetical future types. However, AnyApp currently builds as a `net8.0-windows` WPF `WinExe`; WebApp must not take a project reference on that desktop executable as if it were a portable runtime library. `AnyAppWebBridge` is a local presentation bridge hosted by AnyApp, with a loopback HTTP endpoint and WebSocket support, not itself a general-purpose web-hosted composition service.
+
+Therefore the next architectural decision is to prove which seam is intended: (a) extract/reuse a host-neutral application/runtime contract that both hosts can consume, or (b) define and test a narrow protocol to a running AnyApp host. The answer must follow the intended product behavior—not a convenience reference. The current WebApp `WebAppCosRuntime` is separate: it composes only the local `WebAppMonikerMicroBundle`, while `WebAppExperienceRuntime` separately creates and ticks its own page/actor FSMs. The two paths are not yet connected.
 
 ## Relationship to WebPage
 
