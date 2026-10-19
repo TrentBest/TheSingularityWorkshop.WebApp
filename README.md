@@ -4,7 +4,7 @@
 
 > **AnyApp for the web: browser-facing inputs and interaction for FSM_COS—not another application runtime.**
 
-WebApp is the web adapter at the Workshop boundary. It turns browser events and user input into well-defined requests, and presents observable state back through web UI. It should not own the meaning or lifecycle of an Experience.
+WebApp is **AnyApp hosted for the web**. It accepts web-based content and browser input, composes the requested Experience through FSM_COS, and presents observable state back through web UI. The existing Windows/WPF AnyApp is a sibling host—not a desktop service WebApp must depend on. WebApp must not own a parallel meaning or lifecycle for an Experience.
 
 ```mermaid
 flowchart LR
@@ -23,15 +23,15 @@ A focused web-facing adapter: browser UI, user input, browser capabilities, and 
 
 ## 🟣 02 Why
 
-The web is another way to reach AnyApp and FSM_COS—not a reason to create a parallel host-owned application lifecycle. The same intent should remain meaningful when the manifestation changes.
+WebApp is the web host manifestation of the AnyApp role, not a client that forwards browser activity to the desktop executable. Web content and browser inputs flow through the web host into FSM_COS; the same application intent should remain meaningful when the manifestation changes.
 
 ## 🩵 03 How
 
-WebApp captures and presents. AnyApp expresses the application-level intent. FSM_COS composes and owns its execution boundary; FSM_API provides state-machine progression. WebApp must not silently replace those responsibilities with its own semantic loop.
+WebApp receives web content and browser input, validates the Experience request and artifact identity, composes through FSM_COS, and presents results. The desktop AnyApp does the analogous job for desktop content and input. FSM_COS remains the composition/execution boundary; FSM_API provides state-machine progression. Neither host should replace those responsibilities with a competing semantic loop.
 
 ## 🟢 04 See it in a minute
 
-The repository currently has no verified public WebApp URL, so a public demo cannot honestly be promised. For the current local browser journey and Chromium smoke-test evidence, see [WebPage](https://github.com/TrentBest/WebPage), a consumer/proving ground rather than the definition of WebApp's purpose.
+The repository currently has no verified public WebApp URL, so a public demo cannot honestly be promised. [WebPage](https://github.com/TrentBest/WebPage) was built first—the chicken before the egg—and is the early web experience that should ultimately consume WebApp as its host/platform. It is useful proving-ground evidence, not the definition of WebApp's purpose.
 
 For local verification, use the .NET 8 commands in [Development](#development). The current gateway → Moniker → hub vertical slice is transitional implementation, not yet proof of the intended AnyApp-for-web boundary.
 
