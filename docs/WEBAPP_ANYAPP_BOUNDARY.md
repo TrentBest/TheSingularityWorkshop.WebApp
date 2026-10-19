@@ -2,7 +2,9 @@
 
 ## Goal
 
-Allow the browser manifestation to discover and open a published Experience in AnyApp and, when explicitly connected, exchange bounded runtime information.
+Define an **optional desktop companion** path for a browser-hosted Experience to open the same published Experience in the Windows/WPF AnyApp host and, when explicitly connected, exchange bounded runtime information.
+
+This document is not WebApp's core runtime architecture. WebApp is AnyApp for the web: it independently validates web-delivered Experience content and composes it through FSM_COS. The bridge is only for Experiences that explicitly request desktop companion behavior. WebApp must still start, compose, and run its own Experience when desktop AnyApp is absent.
 
 ## Launch
 
@@ -101,12 +103,12 @@ An error should identify the boundary that failed rather than presenting a gener
 
 ## Independence
 
-Neither side should require the other merely to start.
+Neither host requires the other merely to start or execute its own Experience. WebApp composes web-hosted content through FSM_COS; desktop AnyApp composes desktop-hosted content through FSM_COS. The optional bridge exists only when a user/Experience explicitly requests companion behavior.
 
-This preserves the value of the browser as a distribution surface and AnyApp as a local runtime.
+This preserves the browser as an independent distribution surface and the desktop app as an independent local host.
 
 ## Future direction
 
-The bridge can eventually carry carefully defined Experience events, telemetry, viewport/capability observations, and synchronization state.
+The optional bridge can eventually carry carefully defined Experience events, telemetry, viewport/capability observations, and synchronization state. None of these features may become a prerequisite for WebApp's ordinary manifest-driven execution.
 
 It should remain deliberately smaller than the runtime itself.
