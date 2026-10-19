@@ -52,11 +52,11 @@
 
 ## Purpose correction: AnyApp for the web
 
-The intended purpose is now explicit: WebApp is the browser-facing counterpart to AnyApp, supplying web user input, browser events/capabilities, and presentation around FSM_COS. It is not intended to become a separate showcase application or own Experience lifecycle. The README and architecture guide now state this boundary and show the intended input → application intent → FSM_COS → observable result flow.
+The product intent is more precise: **WebApp is AnyApp for the web.** It is a web host in its own right, takes web-based Experience content and browser input, and composes that content through FSM_COS. The Windows/WPF AnyApp executable is a sibling manifestation of the same host role, not a required service or project dependency for WebApp. WebApp should not forward its core execution to the desktop bridge.
 
-Source inspection of AnyApp/development found real candidate contracts: `ExperienceManifest`, `AnyAppRuntime.Compose` / `ComposeAsync`, and `AnyAppWebBridge`. There is an integration constraint: AnyApp currently targets `net8.0-windows` as a WPF `WinExe`, while `AnyAppWebBridge` is a local bridge hosted by that desktop application. WebApp should not take a direct project reference to the desktop executable as if it were a portable runtime library. The architecture guide now records the unresolved seam: extract a host-neutral runtime/contract or use a narrow protocol to an AnyApp host, based on intended product behavior.
+The existing AnyApp `ExperienceManifest` and `AnyAppRuntime.Compose` / `ComposeAsync` show useful manifest/composition patterns, but currently live in the `net8.0-windows` WPF `WinExe` project. `AnyAppWebBridge` is a local presentation bridge hosted by the desktop app, not WebApp's canonical runtime. The architectural task is to make the relevant manifest/request-result contract host-neutral as needed, then have WebApp resolve web-delivered artifacts and compose them directly through FSM_COS. README and architecture documentation now explicitly state this intended direction.
 
-The current implementation contradicts that target: `WebAppExperienceRuntime` owns page/actor FSMs, a 100-actor demonstration, and a private heartbeat. That is now tracked as a purpose-level migration blocker, not merely a cleanup item.
+The current implementation contradicts that target: `WebAppCosRuntime` composes only a local Moniker bundle, while `WebAppExperienceRuntime` owns page/actor FSMs, a 100-actor demonstration, and a private heartbeat. These are prototype paths, not manifest-driven web content composition. Replacing them with the real web-host path is the primary migration blocker, not merely cleanup.
 
 ## Current technical risk
 
