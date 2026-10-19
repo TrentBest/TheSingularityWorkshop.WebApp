@@ -8,7 +8,7 @@
 
 ## Verified baseline
 
-- The latest source-integration workflow passed restore, dependency audit, Release build, and tests on 2026-10-19 (run [39335144122](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39335144122), commit `2ceda125`). The audit reported no vulnerable packages for the WebApp application and test projects in the restored development source graph. The Release build succeeded and all 4 tests passed.
+- The latest source-integration workflow passed restore, dependency audit, Release build, and tests on 2026-10-19 (run [39335815591](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39335815591), commit `0b29db2c`). The audit reported no vulnerable packages for the WebApp application and test projects in the restored development source graph. The Release build succeeded and all 4 tests passed.
 - The application targets .NET 8 and treats compiler warnings as errors.
 - The solution has a test project covering FSM_COS startup composition, Moniker structure, preallocated actor contexts, and FSM-driven entry.
 - The public-feed package reference has been changed from FSM_COS `0.1.0-alpha.5` to `0.1.0-alpha.7`.
@@ -22,8 +22,8 @@
 - [x] Pin GitHub Actions to immutable commit SHAs.
 - [x] Align the published-package path to FSM_COS alpha.7.
 - [ ] Verify public NuGet restore/build/test against alpha.7 in CI. **Current blocker:** run 153 and run 154 failed package restore because NuGet.org does not yet contain FSM_COS alpha.7 (nearest published version reported by CI: alpha.6). Do not publish it from WebApp; validate the development source graph while alpha.7 remains unpublished.
-- [x] Verify direct and transitive NuGet vulnerability auditing against the restored development source graph. Run [39335144122](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39335144122) reports no vulnerable packages for the WebApp application and test projects. This is a source-graph result, not a guarantee of security or a substitute for auditing the eventual published-package graph.
-- [x] Re-verify the source-integration workflow after fixing the audit command. Run [39335144122](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39335144122) passed source restore, dependency audit, Release build, and all 4 tests.
+- [x] Verify direct and transitive NuGet vulnerability auditing against the restored development source graph. Run [39335815591](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39335815591) reports no vulnerable packages for the WebApp application and test projects. This is a source-graph result, not a guarantee of security or a substitute for auditing the eventual published-package graph.
+- [x] Re-verify the source-integration workflow after fixing the audit command. Run [39335815591](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39335815591) passed source restore, dependency audit, Release build, and all 4 tests.
 - [ ] Verify a warning-free Release build and test completion. Run [39335144122](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39335144122) passed build/tests, but emitted two XML-documentation warnings from the checked-out FSM_API source (`CS1573` and `CS1591`). The source graph is not warning-free yet; determine ownership and fix at the appropriate source rather than suppressing the warnings.
 
 ### 2. Runtime and architectural ownership
