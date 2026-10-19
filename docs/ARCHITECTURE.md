@@ -1,135 +1,99 @@
 # WebApp Architecture
 
 ## Purpose
+
 ![WebApp to AnyApp bridge](assets/webapp-anyapp-bridge.svg)
 
-The bridge remains a coordination boundary rather than an execution backdoor.
+**WebApp is AnyApp for the web.** Its job is to give the Workshop's application/composition boundary a browser-facing surface: web-based user input, browser events and capabilities, and presentation of observable results.
 
+It is an adapter—not a second application runtime, not an alternative composition engine, and not the owner of Experience semantics or lifecycle. The existing bridge SVG describes a safety boundary; it does not mean WebApp should take over the execution behind that boundary.
 
-**TheSingularityWorkshop.WebApp** is the browser manifestation of the Singularity Workshop.
+## Intended direction
 
-It is not the Experience itself, not the desktop runtime, and not a replacement for FSM_COS. It is a manifestation and interaction surface through which an Experience can be discovered, entered, observed, and eventually connected to other manifestations.
-
-The WebApp exists to make the Workshop reachable through a browser while preserving the same underlying identity, artifact, and Experience model used by desktop and future immersive clients.
-
-## Architectural position
-
-```
-                         Experience
-                              |
-             +----------------+----------------+
-             |                |                |
-           WebApp           AnyApp             VR
-             |                |                |
-        browser UI      local runtime       immersive UI
-             |                |                |
-             +-------- shared identity -------+
-                              |
-                         FSM_COS / runtime
-                              |
-                     MicroBundle artifacts
-                              |
-                    MicroBundle Repository
+```mermaid
+flowchart LR
+  U[Person / browser input] --> W[WebApp<br/>web adapter]
+  W --> A[AnyApp<br/>application-level intent]
+  A --> C[FSM_COS<br/>composition + execution boundary]
+  C --> F[FSM_API<br/>state progression]
+  F --> R[Observable state / result]
+  R --> W
+  P[WebPage or another web consumer] -. uses .-> W
 ```
 
-The diagram describes manifestations, not a requirement that all clients execute the same code.
+The key contract is the request/result boundary. WebApp translates browser interactions into defined application requests and renders resulting state. It must not implement a parallel semantic lifecycle to make the page appear alive.
 
-### WebApp responsibilities
+## Responsibilities
 
-The WebApp owns browser-native concerns:
+### WebApp owns
 
-- discovery and presentation
-- navigation
-- browser interaction
-- Web APIs
-- WebXR capability discovery
-- communication with a local AnyApp companion
-- browser-safe session state
-- distribution of published Experience identities
-- user-facing connection and capability status
+- browser-native input, interaction, navigation, and presentation;
+- adapting browser events into explicit application-level requests;
+- browser capability discovery, including Web APIs and WebXR;
+- web-safe session and connection status;
+- rendering observable state returned by the application/composition layer;
+- safe, validated communication across a documented protocol boundary.
 
 ### WebApp does not own
 
-The WebApp must not become:
+- application semantics that belong to AnyApp or Experience artifacts;
+- FSM_COS composition or a replacement execution loop;
+- an independently invented FSM lifecycle for the canonical Experience;
+- arbitrary assembly loading, code execution, filesystem commands, or a remote shell;
+- the canonical artifact repository or mutation of immutable artifact identity.
 
-- a desktop runtime hidden behind HTTP
-- an assembly loader
-- an arbitrary code execution surface
-- the canonical source of Experience semantics
-- a duplicate FSM_COS implementation
-- a substitute for the MicroBundle Repository
+## Relationship to AnyApp
 
-## The Experience boundary
+AnyApp is the application-level counterpart; WebApp provides its web-facing manifestation. Keep intent independent of presentation so a browser interaction and a non-web interaction can request the same meaningful operation without duplicating the operation's semantics.
 
-An Experience has identity independent of manifestation.
+A request such as “enter this published Experience” is an application intent. The web layer may validate and submit that request, then present progress and results. It must not smuggle arbitrary code, assembly bytes, process instructions, or filesystem commands across the boundary.
 
-A browser route, desktop executable, or future VR client may represent the same Experience without becoming the owner of its meaning.
+## Relationship to FSM_COS and FSM_API
 
-Immutable artifact identity is:
+FSM_COS remains the composition and execution boundary. WebApp supplies the browser-facing inputs and presentation around that boundary; it must not create a second lifecycle owner merely because the browser needs periodic rendering. FSM_API state progression should be driven according to the canonical runtime/process-group contract, not a WebApp-owned heartbeat that becomes the semantic clock.
+
+The exact integration contract must be proven against the current FSM_COS API and canonical Experience artifacts before the transitional runtime is removed. A successful composition call alone is insufficient evidence that the composed Experience actually executes.
+
+## Relationship to WebPage
+
+WebPage is a consumer/proving ground for web experiences, not the architectural definition of WebApp. Avoid moving WebPage-specific information architecture, landing-page choreography, or a showcase simulation into the WebApp package's core purpose.
+
+## Artifact identity
+
+Where WebApp presents or requests a published artifact, preserve its immutable identity:
 
 ```
 BundleId + Version + ContentHash
 ```
 
-An Experience manifest refers to those immutable artifacts. The WebApp may discover and present them, but it should not silently mutate their identity.
+Resolve and validate manifests, verify content hashes, and fail closed when the requested artifact cannot be validated. Do not silently mutate identity or substitute a local demo artifact as if it were canonical.
 
-## Browser as manifestation
+## State and observability
 
-The browser provides an unusually powerful distribution boundary:
+Keep distinct facts distinct:
 
-1. open a URL
-2. discover an Experience
-3. inspect its identity and capabilities
-4. enter the Experience
-5. optionally connect to a local AnyApp companion
-6. optionally request immersive capabilities
+- **discovered** — an identity is known;
+- **available** — required artifacts can be resolved and validated;
+- **requested** — the browser submitted an explicit action;
+- **running** — the canonical runtime reports active execution;
+- **completed / failed** — the canonical runtime reports an outcome;
+- **connected** — an optional companion/protocol connection is established;
+- **immersive-capable / immersive-active** — browser/device capability and session state.
 
-The browser therefore acts as an access point into the Workshop rather than as the Workshop's definition.
+These are observations of a lifecycle, not permission for WebApp to own it. Browser rendering may refresh on its own schedule; semantic progression must follow the canonical runtime contract.
 
-## AnyApp relationship
+## Current migration gap
 
-WebApp and AnyApp are complementary.
+The current `WebAppExperienceRuntime` creates page and actor FSMs in host code, preallocates 100 actor contexts, and advances them on a private 33 ms heartbeat. Its Moniker → gravity → hub choreography is a transitional prototype. It does not yet satisfy the intended “AnyApp for the web” role and must not be treated as proof of canonical Experience execution.
 
-The browser is strong at reach, presentation, interaction, distribution, and browser APIs. AnyApp is strong at local execution, local persistence, computation, artifact caching, and capabilities unavailable to a browser.
+Before removing it, add deterministic, observable integration tests that prove:
 
-The bridge between them is a protocol boundary. It is not a remote shell.
-
-The WebApp may request an action such as "open this published Experience in AnyApp"; it must never transmit arbitrary code, assembly bytes, filesystem commands, or process instructions as part of that request.
-
-## WebXR relationship
-
-WebXR is treated as another manifestation boundary.
-
-WebXR capability belongs to the browser/device. GUI semantics remain platform-neutral. The WebApp may translate semantic Experience presentation into browser/XR presentation, while FSM/API/runtime contracts remain outside the renderer.
-
-Future XR work should preserve this separation:
-
-```
-Experience semantics
-       |
-semantic presentation
-       |
-WebApp
-       |
-WebXR manifestation
-```
-
-## State model
-
-The WebApp should distinguish at least:
-
-- **discovered** — identity is known
-- **available** — required published artifacts can be resolved
-- **entered** — browser manifestation is active
-- **connected** — AnyApp companion is connected
-- **running** — local runtime reports active execution
-- **immersive-capable** — browser reports XR capability
-- **immersive-active** — an XR session is active
-
-These states describe observations and lifecycle, not ownership of the underlying Experience.
+1. browser input becomes the expected application-level request;
+2. FSM_COS composes the intended Experience from canonical artifacts;
+3. the composed Experience actually progresses under its proper runtime owner;
+4. WebApp renders the resulting state without independently driving semantic lifecycle;
+5. invalid input, unavailable artifacts, disconnects, and failures are surfaced safely.
 
 ## Design principle
 
-> The WebApp is a door into the Workshop, not the Workshop itself.
-
-That distinction should guide implementation decisions whenever browser convenience conflicts with architectural ownership.
+> WebApp is the web-facing adapter—not the application, not the composition engine, and not a competing runtime.
