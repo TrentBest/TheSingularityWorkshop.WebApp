@@ -125,13 +125,11 @@
   <text class="label" x="292" y="687">resolves bundle</text>
   <path class="edge" d="M870 430 L870 375"/>
   <text class="label" x="884" y="407">manifest input</text>
-  <path class="edge" d="M870 730 L870 675"/>
+  <path class="edge" d="M870 675 L870 730"/>
   <text class="label" x="884" y="706">Configure(manifest)</text>
   <path class="target" d="M505 165 C565 165 585 165 650 165"/>
   <text class="targetLabel" x="522" y="148">intended adapter path</text>
-  <path class="target" d="M1090 560 C1130 560 1150 595 1190 595"/>
-  <path class="target" d="M1190 595 C1155 760 1120 975 1080 975 C830 1010 520 1005 350 955"/>
-  <text class="targetLabel" x="1120" y="735">request/result protocol</text>
+
 
   <rect x="55" y="990" width="1490" height="82" rx="10" fill="#e2e8f0"/>
   <text class="kind" x="78" y="1018">Important boundary finding</text>
