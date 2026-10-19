@@ -22,13 +22,17 @@ to address an artifact.
 
 Never treat a display name or URL alone as sufficient artifact identity.
 
-### AnyApp launch
+### Web-hosted Experience execution
 
-The `anyapp://` protocol accepts launch intent, not arbitrary instructions.
+WebApp is the web manifestation of the AnyApp host role. It validates the requested Experience manifest, immutable artifact identities, and authorization policy before resolving web-delivered artifacts and composing through FSM_COS. Browser input is intent, not authority to load arbitrary assemblies, execute commands, or bypass artifact validation.
+
+The web host must not depend on the desktop AnyApp process for its own runtime composition. Any shared manifest/request-result contract should be host-neutral and must not drag WPF or desktop lifecycle into WebApp.
+
+### Optional desktop launch and local bridge
+
+The `anyapp://` protocol is an optional desktop-companion launch path for Experiences that explicitly request it. It accepts launch intent, not arbitrary instructions. It is not the canonical execution path for ordinary WebApp Experiences.
 
 AnyApp validates the requested identity and obtains artifacts through its own trusted path.
-
-### Local bridge
 
 The loopback bridge should use:
 
