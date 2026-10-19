@@ -37,7 +37,9 @@ For local verification, use the .NET 8 commands in [Development](#development). 
 
 ## 🟪 05 Documentation and theory
 
-[Documentation Index](docs/DOCUMENTATION_INDEX.md) · [Architecture](docs/ARCHITECTURE.md) · [Implementation Notes](docs/IMPLEMENTATION_NOTES.md) · [Security Model](docs/SECURITY_MODEL.md)
+[Documentation Index](docs/DOCUMENTATION_INDEX.md) · [Architecture](docs/ARCHITECTURE.md) · [Implementation Notes](docs/IMPLEMENTATION_NOTES.md) · [Security Model](docs/SECURITY_MODEL.md) · [Source-grounded runtime UML](docs/assets/webapp-anyapp-runtime-uml.svg)
+
+The class map distinguishes existing source dependencies from the intended request/result seam, which is not yet proven end to end.
 
 ---
 
