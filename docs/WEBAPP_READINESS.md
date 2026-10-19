@@ -1,6 +1,6 @@
 # WebApp Release Readiness
 
-**Current estimate: 58% — not release-ready.** This is an engineering readiness estimate, not a test pass rate and not authorization to publish or deploy.
+**Current estimate: 55% — not release-ready.** This is an engineering readiness estimate, not a test pass rate and not authorization to publish or deploy.
 
 **Branch policy:** work on `development`; keep `master` untouched.  
 **Current target:** consume `TheSingularityWorkshop.FSM_COS 0.1.0-alpha.7`.  
@@ -8,7 +8,7 @@
 
 ## Verified baseline
 
-- The source-integration workflow passed restore, Release build, and tests on 2026-10-19 (run 158, commit `41c335c`). This validates the source graph at that commit; the newer vulnerability-audit workflow change is being revalidated separately.
+- The source-integration workflow passed restore, Release build, and tests on 2026-10-19 (run 158, commit `41c335c`). Later audit-workflow validation is currently blocked because `dotnet list package` attempts to restore the public-package graph instead of inspecting the already-restored source graph.
 - The application targets .NET 8 and treats compiler warnings as errors.
 - The solution has a test project covering FSM_COS startup composition, Moniker structure, preallocated actor contexts, and FSM-driven entry.
 - The public-feed package reference has been changed from FSM_COS `0.1.0-alpha.5` to `0.1.0-alpha.7`.
@@ -22,9 +22,9 @@
 - [x] Pin GitHub Actions to immutable commit SHAs.
 - [x] Align the published-package path to FSM_COS alpha.7.
 - [ ] Verify public NuGet restore/build/test against alpha.7 in CI. **Current blocker:** run 153 and run 154 failed package restore because NuGet.org does not yet contain FSM_COS alpha.7 (nearest published version reported by CI: alpha.6). Do not publish it from WebApp; validate the development source graph while alpha.7 remains unpublished.
-- [ ] Add a direct and transitive NuGet vulnerability audit that fails on findings.
-- [x] Verify the source-integration workflow builds and tests against the development dependency graph (run 158, commit `41c335c`). Re-run after workflow audit changes before considering this gate fully current.
-- [x] Verify warning-free Release build and test command completion for the source graph at run 158; rerun on the latest workflow revision remains required.
+- [ ] Verify direct and transitive NuGet vulnerability auditing against the restored graph. Run 162 failed because the audit command re-triggered public-package restore and hit the known unpublished FSM_COS alpha.7 dependency; this is a workflow invocation problem, not yet evidence of a vulnerability finding.
+- [ ] Re-verify the source-integration workflow after fixing the audit command. Run 158 (commit `41c335c`) passed restore/build/tests, but run 162 did not reach build/test because the audit step failed.
+- [ ] Re-verify warning-free Release build and test completion on the latest workflow revision; run 158 is valid historical evidence only.
 
 ### 2. Runtime and architectural ownership
 
@@ -49,6 +49,12 @@
 - [ ] Recheck README, architecture, roadmap, and security claims against the shipped behavior.
 - [ ] Complete the repository's release checklist and review all changes on `development`.
 - [ ] Obtain explicit release authorization before any publication or deployment.
+
+## Purpose correction: AnyApp for the web
+
+The intended purpose is now explicit: WebApp is the browser-facing counterpart to AnyApp, supplying web user input, browser events/capabilities, and presentation around FSM_COS. It is not intended to become a separate showcase application or own Experience lifecycle. The README and architecture guide now state this boundary and show the intended input → application intent → FSM_COS → observable result flow.
+
+The current implementation contradicts that target: `WebAppExperienceRuntime` owns page/actor FSMs, a 100-actor demonstration, and a private heartbeat. That is now tracked as a purpose-level migration blocker, not merely a cleanup item.
 
 ## Current technical risk
 
