@@ -63,7 +63,7 @@
   <line class="divider" x1="650" y1="202" x2="1090" y2="202"/>
   <text class="member" x="670" y="228">+ Compose(manifest, config?)</text>
   <text class="member" x="670" y="252">  : RuntimeAssembly</text>
-  <text class="member" x="670" y="276">+ ComposeAsync(experience, endpoint, token)</text>
+  <text class="member" x="670" y="276">+ ComposeAsync(experience, repositoryEndpoint, cancellationToken)</text>
   <line class="divider" x1="650" y1="294" x2="1090" y2="294"/>
   <text class="member" x="670" y="320">Builds FsmCos with AnyAppMicroBundleCatalog</text>
   <text class="member" x="670" y="344">Repository path preloads artifact closure.</text>
