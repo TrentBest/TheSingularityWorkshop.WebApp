@@ -112,11 +112,11 @@
 
   <rect x="1190" y="500" width="355" height="190" rx="10" fill="#fff7ed" stroke="#d97706" stroke-width="2"/>
   <text class="kind" x="1210" y="530">TARGET CONTRACT — NOT YET WIRED</text>
-  <text class="member" x="1210" y="562">Browser event</text>
-  <text class="member" x="1210" y="588">→ validated request / intent</text>
-  <text class="member" x="1210" y="614">→ AnyApp request/runtime boundary</text>
-  <text class="member" x="1210" y="640">→ observable result → browser UI</text>
-  <text class="label" x="1210" y="666">No WebApp-owned semantic heartbeat.</text>
+  <text class="member" x="1210" y="562">Browser event + web content</text>
+  <text class="member" x="1210" y="588">→ validate manifest / artifact identity</text>
+  <text class="member" x="1210" y="614">→ WebApp host composes via FSM_COS</text>
+  <text class="member" x="1210" y="640">→ runtime state → browser UI</text>
+  <text class="label" x="1210" y="666">Desktop AnyApp is a sibling host.</text>
 
   <!-- relationships -->
   <path class="edge" d="M280 430 L280 375"/>
@@ -127,13 +127,12 @@
   <text class="label" x="884" y="407">manifest input</text>
   <path class="edge" d="M870 675 L870 730"/>
   <text class="label" x="884" y="706">Configure(manifest)</text>
-  <path class="target" d="M505 165 C565 165 585 165 650 165"/>
-  <text class="targetLabel" x="522" y="148">intended adapter path</text>
+  <text class="targetLabel" x="55" y="970">Target: WebApp consumes web Experience artifacts and composes them directly through FSM_COS; it does not proxy execution to the desktop AnyApp.</text>
 
 
   <rect x="55" y="990" width="1490" height="82" rx="10" fill="#e2e8f0"/>
   <text class="kind" x="78" y="1018">Important boundary finding</text>
-  <text class="sub" x="78" y="1042">AnyApp already defines ExperienceManifest, AnyAppRuntime.Compose/ComposeAsync, and AnyAppWebBridge. WebApp currently composes a fixed local Moniker</text>
-  <text class="sub" x="78" y="1062">bundle separately and runs a private landing simulation. The exact web-to-AnyApp handoff and canonical lifecycle still require integration tests.</text>
+  <text class="sub" x="78" y="1042">The desktop AnyApp manifest/runtime types are design references, not a required WebApp dependency. WebApp must load web-delivered Experience content</text>
+  <text class="sub" x="78" y="1062">and compose it directly through FSM_COS. Current local Moniker composition and private landing simulation do not yet prove that path.</text>
   <text class="foot" x="55" y="1100">Generated from source inspection of AnyApp/development and WebApp/development; update this diagram when public contracts change.</text>
 </svg>
