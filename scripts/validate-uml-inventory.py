@@ -27,8 +27,8 @@ svgs = list((uml / 'assets').glob('*.svg'))
 if not svgs: errors.append('No UML SVGs found in docs/UML/assets')
 for svg in svgs:
     data = svg.read_text(encoding='utf-8')
-    if not re.search(r'<title>\s*[^<\s]', data, re.I): errors.append('SVG missing title: ' + str(svg.relative_to(root)))
-    if not re.search(r'<desc>\s*[^<\s]', data, re.I): errors.append('SVG missing description: ' + str(svg.relative_to(root)))
+    if not re.search(r'<title(?:\s[^>]*)?>\s*[^<\s]', data, re.I): errors.append('SVG missing title: ' + str(svg.relative_to(root)))
+    if not re.search(r'<desc(?:\s[^>]*)?>\s*[^<\s]', data, re.I): errors.append('SVG missing description: ' + str(svg.relative_to(root)))
 if errors:
     print('\n'.join('ERROR: ' + e for e in errors))
     sys.exit(1)
