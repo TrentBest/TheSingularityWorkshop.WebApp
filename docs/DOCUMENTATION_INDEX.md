@@ -9,6 +9,10 @@ The WebApp documentation is layered so that the repository explains its own role
 - [Roadmap](ROADMAP.md) — current proving-ground work and future integration.
 - [Experience Manifestation Theory](EXPERIENCE_MANIFESTATION_THEORY.md) — why one Experience can have multiple manifestations.
 
+## Source-to-UML documentation
+
+- [C# source/UML inventory](UML/README.md) — manually reviewed source-unit and type index, dedicated type pages, and accessible SVG class cards. The pages are source-reviewed, hand-authored documentation; they are not yet generated or drift-checked by CI.
+
 ## Boundaries
 
 - [WebApp ↔ AnyApp](WEBAPP_ANYAPP_BOUNDARY.md) — optional desktop companion protocol, separate from WebApp's own host/runtime path.
