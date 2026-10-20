@@ -45,15 +45,15 @@ The catalog is still host-owned and only resolves a temporary Moniker compatibil
 
 ## Next implementation slice
 
-1. define/reuse a host-neutral Experience manifest and request/result contract;
-2. let authoring produce web-deliverable manifests/configuration rather than host-specific runtime code;
-3. resolve immutable web-delivered MicroBundle artifacts and validate their identity;
-4. compose the declared Experience directly through FSM_COS;
-5. execute it under the canonical runtime/process-group owner and expose observable state;
-6. present the result through the browser rendering boundary;
-7. test that an authored artifact changes the page without editing the host.
+1. define/reuse a host-neutral Experience identity and request/result contract;
+2. identify or establish the canonical Experience/process-group execution owner independently of the web UI;
+3. compose the declared Experience and its dependencies through FSM_COS;
+4. bind the resulting `RuntimeAssembly` to that Experience and prove FSM_API progression under the canonical owner;
+5. expose observable execution state to the browser rendering boundary without a WebApp-owned semantic heartbeat;
+6. then connect web-delivered manifests/configuration and the reviewed immutable-artifact materialization contract;
+7. test that a composed Experience changes the page without editing the host.
 
-Keep browser presentation separate from semantic execution. WebApp is responsible for hosting the web manifestation, but FSM_COS/FSM_API and the canonical Experience/process-group contract remain responsible for composition and progression.
+Keep browser presentation separate from semantic execution. FSM_COS composes the declared MicroBundles into a `RuntimeAssembly`; it does not tick the Experience. FSM_API state progression belongs to the canonical Experience/process-group execution owner, which WebApp must consume rather than replace with its private heartbeat.
 
 ## Repository integration
 
