@@ -16,10 +16,10 @@ def make_fixture(root: Path) -> None:
     (root / "Infrastructure" / "A.cs").write_text("class A {}\n", encoding="utf-8")
     (uml / "README.md").write_text(
         "# Inventory\n\n"
-        "| C# source file | Type | Documentation |\n"
-        "|---|---|---|\n"
-        "| `Program.cs` | Entry point | [Program](Program.md) |\n"
-        "| `Infrastructure/A.cs` | A | [A](A.md) |\n",
+        "| C# source file | Type | Documentation | UML SVG |\n"
+        "|---|---|---|---|\n"
+        "| `Program.cs` | Entry point | [Program](Program.md) | Sequence described in page |\n"
+        "| `Infrastructure/A.cs` | A | [A](A.md) | [A.svg](assets/A.svg) |\n",
         encoding="utf-8",
     )
     (uml / "Program.md").write_text("# Program\n", encoding="utf-8")
@@ -86,8 +86,8 @@ def main() -> int:
         readme = root / "docs" / "UML" / "README.md"
         readme.write_text(
             readme.read_text(encoding="utf-8").replace(
-                "| `Infrastructure/A.cs` | A | [A](A.md) |",
-                "| `Infrastructure/A.cs` | A | Not documented |",
+                "| `Infrastructure/A.cs` | A | [A](A.md) | [A.svg](assets/A.svg) |",
+                "| `Infrastructure/A.cs` | A | Not documented | [A.svg](assets/A.svg) |",
             ),
             encoding="utf-8",
         )
@@ -95,6 +95,31 @@ def main() -> int:
     expect_failure("source inventory row without a documentation link",
                    remove_documentation_link,
                    "Source inventory row has no Markdown documentation link")
+
+    def remove_uml_link(root: Path) -> None:
+        readme = root / "docs" / "UML" / "README.md"
+        readme.write_text(
+            readme.read_text(encoding="utf-8").replace(
+                "| `Infrastructure/A.cs` | A | [A](A.md) | [A.svg](assets/A.svg) |",
+                "| `Infrastructure/A.cs` | A | [A](A.md) | No diagram |",
+            ),
+            encoding="utf-8",
+        )
+
+    expect_failure("source inventory row without a UML SVG link", remove_uml_link,
+                   "Source inventory row has no UML SVG link")
+
+    def list_missing_svg(root: Path) -> None:
+        readme = root / "docs" / "UML" / "README.md"
+        readme.write_text(
+            readme.read_text(encoding="utf-8").replace(
+                "[A.svg](assets/A.svg)", "[A.svg](assets/Missing.svg)"
+            ),
+            encoding="utf-8",
+        )
+
+    expect_failure("inventory link to missing UML SVG", list_missing_svg,
+                   "Missing UML SVG")
 
     def break_markdown_link(root: Path) -> None:
         (root / "docs" / "UML" / "A.md").write_text(
