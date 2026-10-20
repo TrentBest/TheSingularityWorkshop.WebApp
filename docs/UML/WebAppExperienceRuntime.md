@@ -9,7 +9,7 @@
 
 ## Responsibility and current status
 
-Implements a fixed landing-page simulation using FSM_API: Gateway → LivingGui → Moniker → Gravity → Running, plus up to 100 living-actor contexts. This is the current transitional prototype, **not** the canonical manifest-driven Experience runtime described by the target architecture.
+Implements a fixed landing-page simulation using FSM_API: Gateway → LivingGui → Moniker → Gravity → Running, plus up to 100 living-actor contexts. FSM_API evaluates the state machines, but this host runtime owns their lifecycle, processing-group scheduling, actor population, and private heartbeat. This is the current transitional prototype, **not** the canonical manifest-driven Experience runtime described by the target architecture.
 
 ## Important members and behavior
 
