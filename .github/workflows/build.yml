@@ -65,6 +65,10 @@ jobs:
         working-directory: WebApp
         run: python3 scripts/validate-uml-inventory.py
 
+      - name: Test UML inventory validator failure cases
+        working-directory: WebApp
+        run: python3 scripts/test-validate-uml-inventory.py
+
       - name: Checkout FSM_API source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
