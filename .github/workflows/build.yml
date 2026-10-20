@@ -61,6 +61,10 @@ jobs:
         with:
           path: WebApp
 
+      - name: Validate source-to-UML inventory
+        working-directory: WebApp
+        run: python3 scripts/validate-uml-inventory.py
+
       - name: Checkout FSM_API source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
