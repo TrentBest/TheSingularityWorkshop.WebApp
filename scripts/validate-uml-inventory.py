@@ -37,6 +37,19 @@ for line in readme.read_text(encoding="utf-8").splitlines():
         if not (readme.parent / target.split("#", 1)[0]).resolve().is_file():
             errors.append("Missing source documentation page for " + source + ": " + target)
 
+    # Rows with a dedicated type page must also link a class-card SVG in the UML column.
+    # Program.cs is the documented top-level entry-point exception: its sequence is
+    # described in Program.md rather than represented as a class-card diagram.
+    if len(cells) >= 4 and "entry point" not in cells[1].lower():
+        svg_links = re.findall(r"\\[[^\\]]+\\]\\(([^)]+\\.svg)(?:#[^)]*)?\\)", cells[3], re.I)
+        if not svg_links:
+            errors.append("Source inventory row has no UML SVG link: " + source)
+        for target in svg_links:
+            if target.startswith(("https://", "http://", "mailto:")):
+                continue
+            if not (readme.parent / target.split("#", 1)[0]).resolve().is_file():
+                errors.append("Missing UML SVG for " + source + ": " + target)
+
 sources = {
     p.relative_to(root).as_posix()
     for p in root.rglob("*.cs")
