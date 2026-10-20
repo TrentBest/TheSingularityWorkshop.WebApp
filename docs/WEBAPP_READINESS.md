@@ -81,4 +81,4 @@ This is a documentation foundation, **not a completed automated documentation ga
 - the current SVGs are manually authored class cards, not generated from a canonical UML model;
 - Razor components, JavaScript, CSS, and cross-package types are outside this first C# inventory.
 
-Keep the readiness estimate at **55%**. Adding documentation does not close the runtime ownership, package compatibility, or browser security/journey blockers listed above. Do not call the documentation requirement complete until inventory-to-source coverage and CI enforcement are demonstrated on the same candidate commit.
+Keep the readiness estimate at **55%**. The new inventory check is wired into source-integration CI, but do not mark it verified until a workflow run on the candidate commit passes. Adding documentation does not close the runtime ownership, package compatibility, or browser security/journey blockers listed above. Do not call the documentation requirement complete until inventory-to-source coverage and CI enforcement are demonstrated on the same candidate commit.
