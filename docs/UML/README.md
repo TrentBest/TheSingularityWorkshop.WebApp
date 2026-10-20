@@ -18,7 +18,7 @@ This directory is the manually reviewed source-documentation index for the WebAp
 - Source links target the `development` branch; source code and tests remain authoritative.
 - The diagrams show only relationships visible in the inspected source. They are static, manually authored SVGs and are **not** generated from Roslyn, reflection, or a canonical UML model.
 - Test links indicate the existing tests and their assertions; they do not imply broader integration or browser coverage.
-- No claim is made yet that CI detects source/type inventory drift, validates all links/SVGs, or regenerates diagrams. That automation remains a follow-up.
+- CI now runs `scripts/validate-uml-inventory.py` in the source-integration job. It checks that every repository `.cs` file (excluding `bin`, `obj`, and `.git`) appears in the source-file inventory, that listed source paths exist, that relative Markdown links in this directory resolve, and that each UML SVG has non-empty `<title>` and `<desc>` metadata. This is a file/link/metadata gate, **not** C# declaration parsing or Roslyn-backed type drift detection. It does not regenerate diagrams.
 - This inventory currently covers the repository's `.cs` files, not Razor component markup, JavaScript, CSS, project files, or every public API in referenced packages. Those have their own source and documentation boundaries.
 
 ## Review checklist
