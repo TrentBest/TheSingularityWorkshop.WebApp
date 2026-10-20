@@ -8,9 +8,10 @@ using fsm_API = TheSingularityWorkshop.FSM_API.FSM_API;
 namespace TheSingularityWorkshop.WebApp.Infrastructure;
 
 /// <summary>
-/// The WebApp manifestation of the Workshop landing Experience.
-/// The browser is presentation; FSM_API owns progression and every living actor.
-/// All actors share one processing group but retain independent FSM instances.
+/// Transitional host-owned simulation of the Workshop landing Experience.
+/// FSM_API evaluates the page and actor state machines, while this host runtime
+/// owns their lifecycle, processing-group scheduling, actor population, and private heartbeat.
+/// This is not the canonical manifest-driven Experience execution path.
 /// </summary>
 public sealed class WebAppExperienceRuntime : IDisposable
 {
