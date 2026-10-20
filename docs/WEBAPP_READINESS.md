@@ -8,7 +8,7 @@
 
 ## Verified baseline
 
-- The latest source-integration workflow passed restore, dependency audit, Release build, and tests on 2026-10-19 (run [39335815591](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39335815591), commit `0b29db2c`). The audit reported no vulnerable packages for the WebApp application and test projects in the restored development source graph. The Release build succeeded and all 4 tests passed.
+- The latest source-integration workflow passed on 2026-10-20 (run [39511325810](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39511325810), commit `e0f0baa427092213fd6569d248ecef9e9be34704`). It passed source-to-UML inventory validation, all six UML-validator regression cases, source-graph restore, dependency audit, Release build, and tests. The published-package build was skipped as expected on `development`. Earlier run [39335815591](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39335815591) reported no vulnerable packages in the restored WebApp application/test source graph; that finding is limited to that graph and run.
 - The application targets .NET 8 and treats compiler warnings as errors.
 - The solution has a test project covering FSM_COS startup composition, Moniker structure, preallocated actor contexts, and FSM-driven entry.
 - The public-feed package reference has been changed from FSM_COS `0.1.0-alpha.5` to `0.1.0-alpha.7`.
@@ -46,7 +46,7 @@
 ### 4. Documentation and release discipline
 
 - [x] Document the current implementation and remaining artifact-driven migration honestly.
-- [ ] Keep readiness ledger synchronized with CI evidence and implementation changes.
+- [x] Keep readiness ledger synchronized with the latest verified source-integration CI evidence; continue updating it as implementation and CI change.
 - [ ] Recheck README, architecture, roadmap, and security claims against the shipped behavior.
 - [ ] Complete the repository's release checklist and review all changes on `development`.
 - [ ] Obtain explicit release authorization before any publication or deployment.
@@ -76,9 +76,9 @@ The initial manual inventory is in [`docs/UML/README.md`](UML/README.md). It map
 
 This is a documentation foundation, **not a completed automated documentation gate**:
 - the source inventory and diagrams are hand-authored;
-- CI runs a Python standard-library check for C# source-file inventory coverage, a documentation link for each inventory row, local Markdown links in `docs/UML`, and SVG `title`/`desc` metadata. The original validator and four deliberate-failure cases passed in [workflow run 39510909815](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39510909815) on commit `9290166c2b358223383efee89df0b9b30f2472cb`. The validator and regression suite have since been strengthened to reject a source row without a documentation link and an SVG missing its description; the expanded suite's CI result is pending.
-- no Roslyn-backed declaration/type drift check or diagram regeneration exists yet; the negative-test cases are now authored but their CI execution remains unverified;
+- CI runs a Python standard-library check for C# source-file inventory coverage, a documentation link for each inventory row, local Markdown links in `docs/UML`, and SVG `title`/`desc` metadata. The original validator and four deliberate-failure cases passed in [workflow run 39510909815](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39510909815). The expanded six-case suite passed on the current documented baseline in [workflow run 39511325810](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39511325810), commit `e0f0baa427092213fd6569d248ecef9e9be34704`.
+- no Roslyn-backed declaration/type drift check or diagram regeneration exists yet;
 - the current SVGs are manually authored class cards, not generated from a canonical UML model;
 - Razor components, JavaScript, CSS, and cross-package types are outside this first C# inventory.
 
-Keep the readiness estimate at **55%**. The previous inventory check and four regression cases were verified by [workflow run 39510909815](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39510909815), including successful source-graph restore, dependency audit, Release build, and tests. The expanded validator now checks for a documentation link on every source row, and the regression suite adds two cases; wait for the new CI run before claiming those additions pass. This remains a narrow file/link/SVG-metadata gate, not Roslyn declaration drift detection or diagram generation. Adding documentation does not close runtime ownership, public-package compatibility, or browser security/journey blockers. Do not call the overall documentation requirement complete until declaration-to-diagram consistency and the remaining source types are addressed.
+Keep the readiness estimate at **55%**. The expanded inventory gate and all six deliberate-defect cases are verified by [workflow run 39511325810](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/runs/39511325810), along with source-graph restore, dependency audit, Release build, and tests. This remains a narrow file/link/SVG-metadata gate, not Roslyn declaration drift detection or diagram generation. Adding documentation does not close runtime ownership, public-package compatibility, or browser security/journey blockers. Do not call the overall documentation requirement complete until declaration-to-diagram consistency and the remaining source types are addressed.
