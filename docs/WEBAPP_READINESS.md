@@ -76,8 +76,8 @@ The initial manual inventory is in [`docs/UML/README.md`](UML/README.md). It map
 
 This is a documentation foundation, **not a completed automated documentation gate**:
 - the source inventory and diagrams are hand-authored;
-- no Roslyn-backed declaration drift check is wired into CI;
-- link checking, SVG `title`/`desc` validation, and deliberate missing-page/missing-diagram negative tests are not yet evidenced;
+- CI now runs a Python standard-library check for C# source-file inventory coverage, local Markdown links in `docs/UML`, and SVG `title`/`desc` metadata; its first execution on the current head still needs confirmation;
+- no Roslyn-backed declaration/type drift check, diagram regeneration, or deliberate negative-test evidence exists yet;
 - the current SVGs are manually authored class cards, not generated from a canonical UML model;
 - Razor components, JavaScript, CSS, and cross-package types are outside this first C# inventory.
 
