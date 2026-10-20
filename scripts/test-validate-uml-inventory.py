@@ -82,6 +82,20 @@ def main() -> int:
     expect_failure("inventory path that does not exist", list_missing_source,
                    "Inventory references missing source")
 
+    def remove_documentation_link(root: Path) -> None:
+        readme = root / "docs" / "UML" / "README.md"
+        readme.write_text(
+            readme.read_text(encoding="utf-8").replace(
+                "| `Infrastructure/A.cs` | A | [A](A.md) |",
+                "| `Infrastructure/A.cs` | A | Not documented |",
+            ),
+            encoding="utf-8",
+        )
+
+    expect_failure("source inventory row without a documentation link",
+                   remove_documentation_link,
+                   "Source inventory row has no Markdown documentation link")
+
     def break_markdown_link(root: Path) -> None:
         (root / "docs" / "UML" / "A.md").write_text(
             "# A\n\n[missing](not-here.md)\n", encoding="utf-8"
@@ -96,6 +110,15 @@ def main() -> int:
                        encoding="utf-8")
 
     expect_failure("SVG without a title", remove_svg_title, "SVG missing title")
+
+    def remove_svg_description(root: Path) -> None:
+        svg = root / "docs" / "UML" / "assets" / "A.svg"
+        svg.write_text(svg.read_text(encoding="utf-8").replace("<desc>Class A</desc>",
+                                                              "<desc></desc>"),
+                       encoding="utf-8")
+
+    expect_failure("SVG without a description", remove_svg_description,
+                   "SVG missing description")
     print("Scope: validator regression tests; no C# declaration drift detection.")
     return 0
 
