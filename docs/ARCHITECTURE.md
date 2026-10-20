@@ -16,7 +16,7 @@ It is an adapter—not a second application runtime, not an alternative composit
 flowchart LR
   U[Person / browser input] --> W[WebApp<br/>web adapter]
   W --> A[AnyApp<br/>application-level intent]
-  A --> C[FSM_COS<br/>composition + execution boundary]
+  A --> C[FSM_COS<br/>composition]
   C --> F[FSM_API<br/>state progression]
   F --> R[Observable state / result]
   R --> W
@@ -48,13 +48,13 @@ The key contract is the request/result boundary. WebApp translates browser inter
 
 **WebApp is AnyApp hosted for the web.** “AnyApp” describes the application-host role; the existing Windows/WPF AnyApp executable is one manifestation of that role, not a desktop service WebApp must depend on. WebApp must accept web-authored/web-delivered Experience content, interpret its published manifest and configuration, and compose the requested runtime through FSM_COS. It must not require the desktop AnyApp process to be running, and it must not proxy every browser interaction to that desktop process.
 
-The shared principle is that application intent and Experience semantics stay independent of presentation. The web host supplies browser inputs and web-facing content; the desktop host supplies desktop inputs and desktop-facing content. Both hand the appropriate manifest/configuration and resolved MicroBundles to FSM_COS and present observable runtime results through their own host UI.
+The shared principle is that application intent and Experience semantics stay independent of presentation. The web host supplies browser inputs and web-facing content; the desktop host supplies desktop inputs and desktop-facing content. Both hand the appropriate manifest/configuration and resolved MicroBundles to FSM_COS for composition, then use the canonical execution owner to progress the Experience and present observable runtime results through their own host UI.
 
 A request such as “enter this published Experience” is an application intent. WebApp validates the request and its artifact identity, resolves the web-delivered content, composes it through FSM_COS, then presents progress and results. It must not smuggle arbitrary code, assembly bytes, process instructions, or filesystem commands across an untrusted browser boundary.
 
 ## Relationship to FSM_COS and FSM_API
 
-FSM_COS remains the composition and execution boundary. WebApp supplies the browser-facing inputs and presentation around that boundary; it must not create a second lifecycle owner merely because the browser needs periodic rendering. FSM_API state progression should be driven according to the canonical runtime/process-group contract, not a WebApp-owned heartbeat that becomes the semantic clock.
+FSM_COS is the composition boundary: it resolves and loads MicroBundles into a `RuntimeAssembly`. It does not itself provide the semantic tick loop or prove that an Experience is running. WebApp supplies browser-facing inputs and presentation around composition; it must not create a second lifecycle owner merely because the browser needs periodic rendering. FSM_API state progression must be driven by the canonical Experience/process-group execution owner, not a WebApp-owned heartbeat that becomes the semantic clock.
 
 The exact integration contract must be proven against the current FSM_COS API and canonical Experience artifacts before the transitional runtime is removed. A successful composition call alone is insufficient evidence that the composed Experience actually executes.
 
