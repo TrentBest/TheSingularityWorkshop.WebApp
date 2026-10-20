@@ -20,6 +20,8 @@ The FSM_COS development-branch document [Runtime Boundary](https://github.com/Tr
 
 The FSM_COS [Consuming MicroBundles](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS/blob/development/docs/CONSUMING_MICROBUNDLES.md) describes a catalog that resolves manifest roots/dependencies to instantiated `IMicroBundle` objects. That catalog/composition contract alone does not establish how an artifact becomes a trusted executable bundle or who advances the resulting Experience.
 
+The FSM_API [tick-boundary and registry-ownership guide](https://github.com/TrentBest/FSM_API/blob/development/Documentation/User%20Guide/Theory/06_Tick_Boundaries_And_Registry_Ownership.md) documents `Interaction.Update(processingGroup)` as a process-group tick followed by deferred-mutation processing. It explicitly warns that this is not a global lock or complete lifecycle abstraction. The public tick primitive is useful execution machinery, but the sources inspected here do not establish a host-neutral Experience owner that binds a manifest/assembly to lifecycle, scheduling, and results.
+
 The WebApp [Implementation Notes](IMPLEMENTATION_NOTES.md) and [Release Readiness](WEBAPP_READINESS.md) record the current host-owned `WebAppExperienceRuntime`, its private heartbeat, the local Moniker compatibility bundle, and the lack of proof that the composed assembly is the object being executed.
 
 ## Required integration contract before migration
