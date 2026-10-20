@@ -76,9 +76,9 @@ The initial manual inventory is in [`docs/UML/README.md`](UML/README.md). It map
 
 This is a documentation foundation, **not a completed automated documentation gate**:
 - the source inventory and diagrams are hand-authored;
-- CI now runs a Python standard-library check for C# source-file inventory coverage, local Markdown links in `docs/UML`, and SVG `title`/`desc` metadata; its first execution on the current head still needs confirmation;
-- no Roslyn-backed declaration/type drift check, diagram regeneration, or deliberate negative-test evidence exists yet;
+- CI now runs a Python standard-library check for C# source-file inventory coverage, local Markdown links in `docs/UML`, and SVG `title`/`desc` metadata; a companion regression script expects deliberate missing-source, nonexistent-inventory-path, broken-link, and missing-SVG-title cases to fail; neither suite is considered verified until the workflow passes on the current candidate commit;
+- no Roslyn-backed declaration/type drift check or diagram regeneration exists yet; the negative-test cases are now authored but their CI execution remains unverified;
 - the current SVGs are manually authored class cards, not generated from a canonical UML model;
 - Razor components, JavaScript, CSS, and cross-package types are outside this first C# inventory.
 
-Keep the readiness estimate at **55%**. The new inventory check is wired into source-integration CI, but do not mark it verified until a workflow run on the candidate commit passes. Adding documentation does not close the runtime ownership, package compatibility, or browser security/journey blockers listed above. Do not call the documentation requirement complete until inventory-to-source coverage and CI enforcement are demonstrated on the same candidate commit.
+Keep the readiness estimate at **55%**. The inventory check and its negative-test suite are wired into source-integration CI, but do not mark them verified until a workflow run on the candidate commit passes. Adding documentation does not close the runtime ownership, package compatibility, or browser security/journey blockers listed above. Do not call the documentation requirement complete until inventory-to-source coverage and CI enforcement are demonstrated on the same candidate commit.
