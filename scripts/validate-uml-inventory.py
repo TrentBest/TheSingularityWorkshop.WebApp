@@ -41,7 +41,7 @@ for line in readme.read_text(encoding="utf-8").splitlines():
     # Program.cs is the documented top-level entry-point exception: its sequence is
     # described in Program.md rather than represented as a class-card diagram.
     if len(cells) >= 4 and "entry point" not in cells[1].lower():
-        svg_links = re.findall(r"\\[[^\\]]+\\]\\(([^)]+\\.svg)(?:#[^)]*)?\\)", cells[3], re.I)
+        svg_links = re.findall(r"\[[^\]]+\]\(([^)]+\.svg)(?:#[^)]*)?\)", cells[3], re.I)
         if not svg_links:
             errors.append("Source inventory row has no UML SVG link: " + source)
         for target in svg_links:
