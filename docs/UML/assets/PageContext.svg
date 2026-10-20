@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="352" viewBox="0 0 900 352" role="img" aria-labelledby="title desc">
+  <title id="title">PageContext UML</title>
+  <desc id="desc">Nested PageContext implements IStateContext and stores page FSM flags, population, and tick counters.</desc>
+  <style>
+    .canvas { fill: #101018; }
+    .card { fill: #171725; stroke: #00a8ff; stroke-width: 4; }
+    .heading { fill: #ffffff; font: 700 23px sans-serif; }
+    .member { fill: #f2f2fa; font: 17px ui-monospace, monospace; }
+    .rule { stroke: #52e05a; stroke-width: 3; }
+  </style>
+  <rect class="canvas" width="900" height="352" rx="18"/>
+  <rect class="card" x="18" y="18" width="864" height="316" rx="12"/>
+  <text class="heading" x="36" y="52">PageContext UML</text>
+  <line class="rule" x1="36" y1="64" x2="864" y2="64"/>
+  <text x="36" y="84" class="member">PageContext : IStateContext</text>
+  <text x="36" y="112" class="member">+ Name : string</text>
+  <text x="36" y="140" class="member">+ IsValid : bool</text>
+  <text x="36" y="168" class="member">+ EnterRequested : bool</text>
+  <text x="36" y="196" class="member">+ MonikerVisible : bool</text>
+  <text x="36" y="224" class="member">+ NavigationVisible : bool</text>
+  <text x="36" y="252" class="member">+ Frozen/Fallen : bool</text>
+  <text x="36" y="280" class="member">+ Population : int</text>
+  <text x="36" y="308" class="member">+ TotalTicks/StateTicks : long</text>
+</svg>

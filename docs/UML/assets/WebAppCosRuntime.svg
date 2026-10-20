@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="268" viewBox="0 0 900 268" role="img" aria-labelledby="title desc">
+  <title id="title">WebAppCosRuntime UML</title>
+  <desc id="desc">WebAppCosRuntime receives WebAppMicroBundleCatalog, constructs FsmCos and RuntimeManifest, calls Execute, and exposes RuntimeAssembly and WebAppMonikerMicroBundle.</desc>
+  <style>
+    .canvas { fill: #101018; }
+    .card { fill: #171725; stroke: #00a8ff; stroke-width: 4; }
+    .heading { fill: #ffffff; font: 700 23px sans-serif; }
+    .member { fill: #f2f2fa; font: 17px ui-monospace, monospace; }
+    .rule { stroke: #52e05a; stroke-width: 3; }
+  </style>
+  <rect class="canvas" width="900" height="268" rx="18"/>
+  <rect class="card" x="18" y="18" width="864" height="232" rx="12"/>
+  <text class="heading" x="36" y="52">WebAppCosRuntime UML</text>
+  <line class="rule" x1="36" y1="64" x2="864" y2="64"/>
+  <text x="36" y="84" class="member">WebAppCosRuntime</text>
+  <text x="36" y="112" class="member">+ RuntimeId : ulong</text>
+  <text x="36" y="140" class="member">+ Assembly : RuntimeAssembly</text>
+  <text x="36" y="168" class="member">+ Moniker : WebAppMonikerMicroBundle</text>
+  <text x="36" y="196" class="member">+ WebAppCosRuntime(catalog)</text>
+  <text x="36" y="224" class="member">FsmCos.Execute(manifest)</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="352" viewBox="0 0 900 352" role="img" aria-labelledby="title desc">
+  <title id="title">WebAppMonikerMicroBundle UML</title>
+  <desc id="desc">WebAppMonikerMicroBundle implements IMicroBundle and exposes descriptor, identity, dependencies and GUI root.</desc>
+  <style>
+    .canvas { fill: #101018; }
+    .card { fill: #171725; stroke: #00a8ff; stroke-width: 4; }
+    .heading { fill: #ffffff; font: 700 23px sans-serif; }
+    .member { fill: #f2f2fa; font: 17px ui-monospace, monospace; }
+    .rule { stroke: #52e05a; stroke-width: 3; }
+  </style>
+  <rect class="canvas" width="900" height="352" rx="18"/>
+  <rect class="card" x="18" y="18" width="864" height="316" rx="12"/>
+  <text class="heading" x="36" y="52">WebAppMonikerMicroBundle UML</text>
+  <line class="rule" x1="36" y1="64" x2="864" y2="64"/>
+  <text x="36" y="84" class="member">WebAppMonikerMicroBundle : IMicroBundle</text>
+  <text x="36" y="112" class="member">+ BundleId : ulong = 3101</text>
+  <text x="36" y="140" class="member">+ ProviderId : string</text>
+  <text x="36" y="168" class="member">+ Descriptor : MicroBundleDescriptor</text>
+  <text x="36" y="196" class="member">+ Id : ulong</text>
+  <text x="36" y="224" class="member">+ Dependencies</text>
+  <text x="36" y="252" class="member">+ Root : GuiNode</text>
+  <text x="36" y="280" class="member">+ Load(context)</text>
+  <text x="36" y="308" class="member">+ Arbitrate(context, roundIndex)</text>
+</svg>
