@@ -23,6 +23,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
+app.MapGet("/health", () => Results.Ok(new { status = "ok", host = "WebApp" }))
+    .WithName("WebAppHealth");
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
@@ -30,3 +33,5 @@ _ = app.Services.GetRequiredService<WebAppCosRuntime>();
 _ = app.Services.GetRequiredService<WebAppExperienceRuntime>();
 
 app.Run();
+
+public partial class Program;
