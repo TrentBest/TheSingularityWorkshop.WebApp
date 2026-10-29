@@ -34,4 +34,4 @@ _ = app.Services.GetRequiredService<WebAppExperienceRuntime>();
 
 app.Run();
 
-public partial class Program;
+public partial class Program { }
