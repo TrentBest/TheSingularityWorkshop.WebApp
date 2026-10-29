@@ -1,4 +1,6 @@
 using System.Threading;
+using System.Text.Json;
+using Microsoft.AspNetCore.Mvc.Testing;
 using TheSingularityWorkshop.WebApp.Infrastructure;
 using Xunit;
 
@@ -6,6 +8,20 @@ namespace TheSingularityWorkshop.WebApp.Tests;
 
 public sealed class WebAppCompositionTests
 {
+    [Fact]
+    public async Task Host_exposes_a_deterministic_health_response_over_http()
+    {
+        using var factory = new WebApplicationFactory<Program>();
+        using var client = factory.CreateClient();
+
+        using var response = await client.GetAsync("/health");
+
+        Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
+        using var document = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        Assert.Equal("ok", document.RootElement.GetProperty("status").GetString());
+        Assert.Equal("WebApp", document.RootElement.GetProperty("host").GetString());
+    }
+
     [Fact]
     public void Startup_runtime_composes_the_moniker_through_fsm_cos()
     {
