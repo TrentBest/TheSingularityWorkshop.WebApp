@@ -2,6 +2,7 @@
 
 # The Singularity Workshop WebApp
 
+[![Sith Policy](assets/sith-policy.svg)](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/workflows/sith-policy.yml)
 > **AnyApp for the web: browser-facing inputs and interaction for FSM_COS—not another application runtime.**
 
 WebApp is **AnyApp hosted for the web**. It accepts web-based content and browser input, composes the requested Experience through FSM_COS, and presents observable state back through web UI. The existing Windows/WPF AnyApp is a sibling host—not a desktop service WebApp must depend on. WebApp must not own a parallel meaning or lifecycle for an Experience.
