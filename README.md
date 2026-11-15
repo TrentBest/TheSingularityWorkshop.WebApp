@@ -34,7 +34,7 @@ WebApp receives web content and browser input, validates the Experience request 
 
 The repository currently has no verified public WebApp URL, so a public demo cannot honestly be promised. [WebPage](https://github.com/TrentBest/WebPage) was built first—the chicken before the egg—and is the early web experience that should ultimately consume WebApp as its host/platform. It is useful proving-ground evidence, not the definition of WebApp's purpose.
 
-For local verification, use the .NET 8 commands in [Development](#development). The current gateway → Moniker → hub vertical slice is transitional implementation, not yet proof of the intended AnyApp-for-web boundary.
+For local verification, use the .NET 10 commands in [Development](#development). The current gateway → Moniker → hub vertical slice is transitional implementation, not yet proof of the intended AnyApp-for-web boundary.
 
 ## 🟪 05 Documentation and theory
 
@@ -50,7 +50,7 @@ The current development implementation still creates a page FSM and 100 actor FS
 
 ## Development
 
-Requires .NET 8.
+Requires .NET 10.
 
     dotnet restore
     dotnet build --configuration Release
