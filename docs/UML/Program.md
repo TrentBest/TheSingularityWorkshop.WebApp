@@ -2,7 +2,7 @@
 
 **Source:** [`Program.cs`](../../Program.cs)  
 **Kind:** C# top-level statements (the source does not explicitly declare a named type).  
-**Project:** `TheSingularityWorkshop.WebApp`, ASP.NET Core .NET 8 host.
+**Project:** `TheSingularityWorkshop.WebApp`, ASP.NET Core .NET 10 host.
 
 ## Responsibility
 
