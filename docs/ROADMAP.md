@@ -7,7 +7,7 @@
 - [x] define Experience manifestation theory
 - [x] define WebApp as the web-host manifestation of the AnyApp role
 - [x] define initial WebXR boundary
-- [x] establish a .NET 8 ASP.NET Core Razor Components host
+- [x] establish a .NET 10 ASP.NET Core Razor Components host
 - [x] compose a host-owned Moniker bundle through FSM_COS
 - [x] present the composed Moniker through the GUI.Blazor rendering boundary
 - [x] run the landing Experience lifecycle and living actors through FSM_API
