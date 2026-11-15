@@ -60,7 +60,7 @@ The exact integration contract must be proven against the current FSM_COS API an
 
 ### Source inspection: host-neutral contract and web content
 
-The current AnyApp `development` branch defines `ExperienceManifest`, `AnyAppRuntime.Compose` / `ComposeAsync`, and `AnyAppWebBridge`. The manifest/runtime code is a useful reference for the intended host contract, but those types currently live in a `net8.0-windows` WPF `WinExe` project. WebApp must not reference the desktop executable as if it were a portable runtime library, and it must not treat the local `AnyAppWebBridge` as the required execution service.
+The current AnyApp `development` branch defines `ExperienceManifest`, `AnyAppRuntime.Compose` / `ComposeAsync`, and `AnyAppWebBridge`. The manifest/runtime code is a useful reference for the intended host contract, but those types currently live in a `net10.0-windows` WPF `WinExe` project. WebApp must not reference the desktop executable as if it were a portable runtime library, and it must not treat the local `AnyAppWebBridge` as the required execution service.
 
 The correct direction is **WebApp itself performs the web-host role**: receive web input; validate a host-neutral Experience manifest and its immutable artifact identity; resolve the referenced web-delivered MicroBundles/configuration; compose them through FSM_COS; and present state/results in the browser. Extract or reuse the manifest and request/result contracts in a host-neutral assembly if needed, without making the web host depend on desktop UI or desktop lifecycle. The desktop AnyApp and WebApp are sibling host manifestations over the same composition architecture, not a client/server pair by default.
 
