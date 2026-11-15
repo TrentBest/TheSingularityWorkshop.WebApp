@@ -1,6 +1,6 @@
 # Implementation Notes
 
-This repository now has a concrete .NET 8 browser-host vertical slice. The development branch contains an ASP.NET Core Razor Components host using Interactive Server rendering, an FSM_COS composition path for a host-owned Moniker bundle, and an FSM_API-driven landing Experience with a 100-slot living-actor population.
+This repository now has a concrete .NET 10 browser-host vertical slice. The development branch contains an ASP.NET Core Razor Components host using Interactive Server rendering, an FSM_COS composition path for a host-owned Moniker bundle, and an FSM_API-driven landing Experience with a 100-slot living-actor population.
 
 This is not yet a general page-authoring system. The current catalog resolves only the temporary local Moniker compatibility bundle, and the landing Experience is assembled by fixed host code. Preserve useful browser presentation work while replacing the prototype lifecycle with manifest-driven web content composed through FSM_COS. WebApp is the web host manifestation of the AnyApp role; it must not depend on the desktop AnyApp executable or use its local bridge as the required runtime.
 
