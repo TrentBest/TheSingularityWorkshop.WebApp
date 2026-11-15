@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using TheSingularityWorkshop.FSM_API;
-using fsm_API = TheSingularityWorkshop.FSM_API.FSM_API;
+using fsm_API = FSM_API.FsmApi;
 
 namespace TheSingularityWorkshop.WebApp.Infrastructure;
 
@@ -94,7 +94,7 @@ public sealed class WebAppExperienceRuntime : IDisposable
             _page.EnterRequested = true;
         }
 
-        fsm_API.Interaction.Update(_pageGroup);
+        fsm_API.Interact.Update(_pageGroup);
         Changed?.Invoke();
     }
 
@@ -102,7 +102,7 @@ public sealed class WebAppExperienceRuntime : IDisposable
     {
         try
         {
-            return fsm_API.Interaction.GetInstances("WebAppPageFSM", _pageGroup).FirstOrDefault()?.CurrentState
+            return fsm_API.Interact.GetInstances("WebAppPageFSM", _pageGroup).FirstOrDefault()?.CurrentState
                 ?? "Gateway";
         }
         catch
@@ -126,7 +126,7 @@ public sealed class WebAppExperienceRuntime : IDisposable
         if (_page.Frozen)
             return;
 
-        fsm_API.Interaction.Update(_actorGroup);
+        fsm_API.Interact.Update(_actorGroup);
 
         var population = 0;
         foreach (var actor in _actors)
@@ -227,7 +227,7 @@ public sealed class WebAppExperienceRuntime : IDisposable
                     if (!_disposed)
                     {
                         _page.TotalTicks++;
-                        fsm_API.Interaction.Update(_pageGroup);
+                        fsm_API.Interact.Update(_pageGroup);
                     }
                 }
 
@@ -258,8 +258,8 @@ public sealed class WebAppExperienceRuntime : IDisposable
 
         try { _heartbeat.Interrupt(); } catch { }
 
-        fsm_API.Interaction.DestroyFiniteStateMachine("WebAppLivingActorFSM", _actorGroup);
-        fsm_API.Interaction.DestroyFiniteStateMachine("WebAppPageFSM", _pageGroup);
+        fsm_API.Interact.DestroyFiniteStateMachine("WebAppLivingActorFSM", _actorGroup);
+        fsm_API.Interact.DestroyFiniteStateMachine("WebAppPageFSM", _pageGroup);
         _shutdown.Dispose();
     }
 
