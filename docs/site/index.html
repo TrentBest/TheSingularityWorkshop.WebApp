@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131d">
+  <meta name="description" content="WebApp is AnyApp for the web: a browser-facing host boundary for the Singularity Workshop.">
+  <title>WebApp · The Singularity Workshop</title>
+  <style>
+    :root{color-scheme:dark;--bg:#10131d;--panel:#191f2e;--line:#30394c;--ink:#edf2ff;--muted:#aab5ca;--cyan:#67e8f9;--violet:#b7a4ff;--gold:#f4cf83}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#28304b 0,transparent 42%),var(--bg);color:var(--ink);font:16px/1.65 system-ui,sans-serif}
+    a{color:var(--cyan);text-underline-offset:3px}a:hover{color:#fff}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}
+    header{padding:24px 0;border-bottom:1px solid var(--line)}.brand{font-size:.78rem;letter-spacing:.18em;color:var(--muted);font-weight:700}.brand b{color:var(--cyan)}
+    nav{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-size:.9rem}
+    .hero{padding:84px 0 64px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+    .eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.2em;font-size:.75rem;font-weight:800}
+    h1{font-size:clamp(2.8rem,7vw,5.7rem);line-height:.98;letter-spacing:-.055em;margin:.2em 0 .35em}
+    h1 span{color:var(--cyan)}.lead{font-size:1.2rem;color:var(--muted);max-width:62ch}
+    .orbit{aspect-ratio:1;border:1px solid #46516c;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#25344c 0 17%,transparent 18%),radial-gradient(circle at center,transparent 0 42%,#52627d55 43% 43.5%,transparent 44%)}
+    .core{width:34%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;background:linear-gradient(145deg,#315c70,#282b56);border:1px solid var(--cyan);box-shadow:0 0 55px #67e8f944;font-weight:800}
+    .node{position:absolute;padding:9px 13px;border:1px solid var(--line);border-radius:999px;background:#1a2232;font-size:.83rem;color:var(--ink)}
+    .n1{top:7%;left:50%;transform:translateX(-50%)}.n2{right:-2%;top:47%}.n3{bottom:7%;left:50%;transform:translateX(-50%)}.n4{left:-3%;top:47%}
+    section{padding:36px 0}h2{font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-.03em;margin:0 0 14px}
+    .muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:linear-gradient(145deg,#1d2637,#151b29);border:1px solid var(--line);border-radius:18px;padding:22px}
+    .card h3{margin:0 0 8px;color:var(--cyan)}.tag{display:inline-block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:10px}
+    .flow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:24px 0}.step{border:1px solid #53617b;border-radius:12px;padding:14px 18px;background:#1a2232;text-align:center}.arrow{color:var(--violet);font-size:1.4rem}
+    .status{border-left:3px solid var(--gold);padding:14px 18px;background:#211f25;color:var(--muted);border-radius:0 12px 12px 0}
+    footer{border-top:1px solid var(--line);margin-top:54px;padding:28px 0;color:var(--muted);font-size:.85rem}
+    @media(max-width:760px){.hero{grid-template-columns:1fr;padding-top:55px}.orbit{max-width:420px;width:100%;margin:auto}.grid{grid-template-columns:1fr}.wrap{width:min(100% - 28px,1120px)}}
+    @media(prefers-reduced-motion:no-preference){.core{animation:pulse 5s ease-in-out infinite}@keyframes pulse{50%{box-shadow:0 0 80px #67e8f966}}}
+  </style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand">THE SINGULARITY WORKSHOP <b>/ WEBAPP</b></div>
+  <nav aria-label="Primary"><a href="#role">Role</a><a href="#architecture">Architecture</a><a href="#reality">Implementation status</a><a href="https://github.com/TrentBest/TheSingularityWorkshop.WebApp">Source repository ↗</a></nav>
+</div></header>
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">A browser-facing manifestation</p>
+      <h1>AnyApp,<br><span>for the web.</span></h1>
+      <p class="lead">WebApp gives browser content and browser input a path into the Workshop's application boundary—then presents observable results without inventing a second runtime.</p>
+    </div>
+    <div class="orbit" role="img" aria-label="Conceptual architecture: WebApp at the center, connected to browser input, AnyApp, FSM_COS and observable results">
+      <div class="core">WEB<br>APP</div><div class="node n1">Browser input</div><div class="node n2">AnyApp</div><div class="node n3">FSM_COS</div><div class="node n4">Results</div>
+    </div>
+  </section>
+  <section id="role">
+    <p class="eyebrow">01 / The boundary</p><h2>One application role. Multiple hosts.</h2>
+    <p class="muted">AnyApp describes the application-host role. WebApp is its web manifestation; the Windows/WPF host is a sibling manifestation, not a desktop service that the browser must proxy through.</p>
+    <div class="grid">
+      <article class="card"><span class="tag">WebApp owns</span><h3>Browser capabilities</h3><p class="muted">Web content, browser input, navigation, browser APIs, safe session boundaries, and web presentation.</p></article>
+      <article class="card"><span class="tag">Shared boundary</span><h3>Application intent</h3><p class="muted">Translate browser interactions into explicit requests. Preserve Experience identity and manifest meaning across hosts.</p></article>
+      <article class="card"><span class="tag">Not WebApp's job</span><h3>Runtime ownership</h3><p class="muted">Do not replace FSM_COS composition, FSM_API progression, or the canonical Experience lifecycle with a parallel browser loop.</p></article>
+    </div>
+  </section>
+  <section id="architecture">
+    <p class="eyebrow">02 / Intended request path</p><h2>Composition, not imitation.</h2>
+    <div class="flow" aria-label="Browser input flows through WebApp, AnyApp, FSM_COS, FSM_API and observable results">
+      <div class="step">Browser<br>input</div><span class="arrow">→</span><div class="step">WebApp<br>adapter</div><span class="arrow">→</span><div class="step">AnyApp<br>intent</div><span class="arrow">→</span><div class="step">FSM_COS<br>composition</div><span class="arrow">→</span><div class="step">FSM_API<br>progression</div><span class="arrow">→</span><div class="step">Observable<br>result</div>
+    </div>
+    <p class="muted">The diagram describes the intended architectural boundary, not a claim that the complete end-to-end path is already proven. The repository documentation distinguishes implemented source from target integration.</p>
+  </section>
+  <section id="reality">
+    <p class="eyebrow">03 / Honest status</p><h2>A proving ground, not a finished runtime.</h2>
+    <div class="status"><strong>Current development state:</strong> the gateway → Moniker → hub vertical slice is transitional. The current implementation still owns a private heartbeat and multiple FSM contexts; the target is to replace that duplicate lifecycle with canonical AnyApp/FSM_COS behavior. This portal is a static architecture and documentation entry point, not the live WebApp runtime.</div>
+    <div class="grid" style="margin-top:18px">
+      <article class="card"><h3>Architecture</h3><p class="muted">Understand responsibilities, boundaries, and the intended request/result seam.</p><a href="https://github.com/TrentBest/TheSingularityWorkshop.WebApp/blob/development/docs/ARCHITECTURE.md">Read architecture ↗</a></article>
+      <article class="card"><h3>Security model</h3><p class="muted">See how browser-originated requests are constrained and validated.</p><a href="https://github.com/TrentBest/TheSingularityWorkshop.WebApp/blob/development/docs/SECURITY_MODEL.md">Read security model ↗</a></article>
+      <article class="card"><h3>Readiness gates</h3><p class="muted">Review current evidence, blockers, and the work required to prove the host boundary.</p><a href="https://github.com/TrentBest/TheSingularityWorkshop.WebApp/blob/development/docs/WEBAPP_READINESS.md">Review readiness ↗</a></article>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">THE SINGULARITY WORKSHOP · WEBAPP · <a href="https://github.com/TrentBest/TheSingularityWorkshop.WebApp">Source on GitHub</a></div></footer>
+</body>
+</html>
