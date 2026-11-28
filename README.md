@@ -2,6 +2,11 @@
 
 # The Singularity Workshop WebApp
 
+[![WebApp Pages](https://img.shields.io/website?url=https%3A%2F%2Ftrentbest.github.io%2FTheSingularityWorkshop.WebApp%2F&label=Pages&style=flat-square)](https://trentbest.github.io/TheSingularityWorkshop.WebApp/)
+[![Pages workflow](https://img.shields.io/github/actions/workflow/status/TrentBest/TheSingularityWorkshop.WebApp/pages.yml?branch=development&style=flat-square&label=Pages%20build)](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/workflows/pages.yml)
+
+**Explore the [WebApp architecture portal](https://trentbest.github.io/TheSingularityWorkshop.WebApp/)** — a static entry point explaining the current host boundary and its implementation status.
+
 [![Sith Policy](assets/sith-policy.svg)](https://github.com/TrentBest/TheSingularityWorkshop.WebApp/actions/workflows/sith-policy.yml)
 > **AnyApp for the web: browser-facing inputs and interaction for FSM_COS—not another application runtime.**
 
